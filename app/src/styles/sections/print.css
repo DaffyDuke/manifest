@@ -4,8 +4,6 @@
   html, body{ background: white; color: black; }
   body::before, body::after{ display:none }
   .cover{ height: auto; min-height: 0; padding: 0 0 20mm; page-break-after: always; }
-  .cover::before, .cover::after{ display: none }
-  .cover-seal{ opacity: .2 }
   .cover-scroll{ color: oklch(0.55 0 0) }
   .cover-title{ color: oklch(0.18 0 0) }
   .cover-title .word{ opacity:1; transform:none; animation:none }

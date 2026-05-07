@@ -84,14 +84,22 @@ export function observeValueArt(): void {
 }
 
 /**
- * Hero parallax — moves `.cover-seal` slightly with mouse position.
+ * Hero parallax — drifts the cover watermark with the cursor for a printed-paper feel.
+ * No-op if the user has reduced motion preference.
  */
 export function attachHeroParallax(): void {
-  const gal = document.querySelector<HTMLElement>('.cover-seal');
-  if (!gal) return;
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  const wm = document.querySelector<HTMLElement>('.cover-watermark');
+  if (!wm) return;
+  let raf = 0;
+  let tx = -2, ty = 2; // baseline offset matches CSS (translate(-2vw, 2vh))
+  function paint() {
+    raf = 0;
+    wm!.style.transform = `translate(calc(-2vw + ${tx}px), calc(2vh + ${ty}px))`;
+  }
   window.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 10;
-    const y = (e.clientY / window.innerHeight - 0.5) * 10;
-    gal.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-  });
+    tx = (e.clientX / window.innerWidth - 0.5) * 22;
+    ty = (e.clientY / window.innerHeight - 0.5) * 22;
+    if (!raf) raf = requestAnimationFrame(paint);
+  }, { passive: true });
 }
