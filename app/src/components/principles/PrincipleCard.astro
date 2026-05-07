@@ -1,6 +1,5 @@
 ---
 import type { Principle } from '~/content/principles';
-import VoteWidget from '~/components/voting/VoteWidget.astro';
 import TerminalAnim from '~/components/terminal/TerminalAnim.astro';
 import type { Term } from '~/content/terms';
 
@@ -10,7 +9,6 @@ interface Props {
   term?: Term;
 }
 const { principle: p, index: i, term } = Astro.props;
-const targetId = `P-${p.r}`;
 ---
 <article class="principle reveal" data-idx={i} style={`--p-hue: ${p.hue}`}>
   <span class="p-folio" aria-hidden="true">{p.r}</span>
@@ -21,13 +19,6 @@ const targetId = `P-${p.r}`;
     {p.foot && (
       <div class="p-footnote"><sup>{p.foot.id}</sup>{p.foot.note}</div>
     )}
-    <div class="p-vote">
-      <VoteWidget targetType="principle" targetId={targetId} />
-    </div>
   </div>
   {term && <TerminalAnim term={term} index={i} />}
 </article>
-
-<style>
-.p-vote { margin-top: 14px; }
-</style>

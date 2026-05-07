@@ -84,6 +84,21 @@
   align-items: flex-start;
   gap: clamp(6px, 1vh, 10px);
 }
+.pr-text .pr-kicker{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: oklch(0.52 0.13 var(--value-hue, 28));
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(4px, 0.6vh, 8px);
+  padding: 4px 10px 4px 0;
+  border-left: 2px solid oklch(0.55 0.15 var(--value-hue, 28));
+  padding-left: 12px;
+}
+.pr-text .pr-kicker .pr-kicker-sep{ opacity: 0.5; }
 .pr-text .left{
   font-family: var(--serif);
   font-variation-settings: "opsz" 144, "wght" 330;
