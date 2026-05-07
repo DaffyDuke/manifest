@@ -4,7 +4,7 @@
 ---
 <script>
   import { observeReveals, observeTerminals, observeValueArt, attachHeroParallax } from '~/lib/observers';
-  import { signSignature, castVote, submitFeedback, getSignatureCount } from '~/lib/api/client';
+  import { refreshSignatureCount, wireFloatingChrome, wireSignFlow, wireVoteWidgets } from '~/lib/wire';
 
   // ------- Reveals + animations -------
   observeReveals();
@@ -91,88 +91,10 @@
   document.getElementById('rainbowToggle')?.addEventListener('change', (e) => persist({ rainbow: (e.target as HTMLInputElement).checked }));
   applyState();
 
-  // ------- Signature counter -------
-  async function refreshSignatureCount() {
-    try {
-      const c = await getSignatureCount();
-      document.querySelectorAll('[data-signature-count]').forEach((el) => { el.textContent = String(c); });
-    } catch {}
-  }
+  // ------- Wired flows -------
   refreshSignatureCount();
-
-  // ------- Sign flow -------
-  const signDialog = document.getElementById('signDialog') as HTMLDialogElement | null;
-  const signOpenBtn = document.getElementById('signOpen');
-  const signFormDialog = document.getElementById('signDialogForm') as HTMLFormElement | null;
-  const signNameDialog = document.getElementById('dialogSignName') as HTMLInputElement | null;
-  const signLinkedinDialog = document.getElementById('dialogSignLinkedin') as HTMLInputElement | null;
-
-  signOpenBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (signDialog?.showModal) signDialog.showModal();
-  });
-  signFormDialog?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = signNameDialog?.value.trim() || '';
-    if (!name) return;
-    const linkedin = signLinkedinDialog?.value.trim() || undefined;
-    const r = await signSignature({ name, linkedin });
-    if (r.ok) {
-      // append to wall
-      const grid = document.getElementById('wallGrid');
-      if (grid) {
-        const el = document.createElement('div');
-        el.className = 'sig new';
-        el.innerHTML = (linkedin ? `<a href="${linkedin}" target="_blank" rel="noopener">${name}</a>` : name) + '<span class="meta">2026</span>';
-        grid.appendChild(el);
-      }
-      await refreshSignatureCount();
-      signDialog?.close();
-      if (signFormDialog) signFormDialog.reset();
-    }
-  });
-  signDialog?.querySelector<HTMLButtonElement>('[data-close]')?.addEventListener('click', () => signDialog.close());
-
+  wireFloatingChrome();
+  wireSignFlow();
+  wireVoteWidgets();
   document.getElementById('printBtn')?.addEventListener('click', () => window.print());
-
-  // ------- Vote + downvote flows -------
-  const dvDialog = document.getElementById('downvoteDialog') as HTMLDialogElement | null;
-  const dvForm = document.getElementById('downvoteForm') as HTMLFormElement | null;
-  const dvType = document.getElementById('dvTargetType') as HTMLInputElement | null;
-  const dvId = document.getElementById('dvTargetId') as HTMLInputElement | null;
-  const dvReason = document.getElementById('dvReason') as HTMLTextAreaElement | null;
-  const dvAlt = document.getElementById('dvAlternative') as HTMLTextAreaElement | null;
-
-  document.querySelectorAll<HTMLElement>('.vote-widget').forEach((widget) => {
-    const targetType = widget.dataset.voteTargetType as 'principle' | 'value';
-    const targetId = widget.dataset.voteTargetId as string;
-    const scoreEl = widget.querySelector<HTMLElement>('[data-vote-score]');
-    widget.querySelector<HTMLElement>('[data-vote-action="up"]')?.addEventListener('click', async () => {
-      const r = await castVote({ targetType, targetId, value: 1 });
-      if (r.ok && scoreEl) scoreEl.textContent = String(r.score);
-    });
-    widget.querySelector<HTMLElement>('[data-vote-action="down"]')?.addEventListener('click', async () => {
-      const r = await castVote({ targetType, targetId, value: -1 });
-      if (r.ok && scoreEl) scoreEl.textContent = String(r.score);
-      if (dvDialog?.showModal && dvType && dvId) {
-        dvType.value = targetType;
-        dvId.value = targetId;
-        dvDialog.showModal();
-      }
-    });
-  });
-
-  dvForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!dvType || !dvId || !dvReason || !dvAlt) return;
-    await submitFeedback({
-      targetType: dvType.value as 'principle' | 'value',
-      targetId: dvId.value,
-      reason: dvReason.value,
-      alternative: dvAlt.value,
-    });
-    dvDialog?.close();
-    dvForm.reset();
-  });
-  dvDialog?.querySelector<HTMLButtonElement>('[data-close]')?.addEventListener('click', () => dvDialog.close());
 </script>

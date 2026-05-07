@@ -1,5 +1,6 @@
 import { MemoryStore } from './memory';
 import type { Store } from './types';
+import { SEEDS } from '~/content/seeds';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -8,10 +9,10 @@ declare global {
 
 let booted = false;
 
-function seedDev(store: Store): void {
-  if (process.env.NODE_ENV === 'production') return;
-  // Seed minimal dev fixtures so the UI counter is non-zero in dev.
-  store.addSignature({ name: 'Dev Seed' });
+function seedFixtures(store: Store): void {
+  for (const s of SEEDS) {
+    store.addSignature({ name: s.name, linkedin: s.linkedin });
+  }
 }
 
 export function getStore(): Store {
@@ -20,7 +21,7 @@ export function getStore(): Store {
   }
   if (!booted) {
     booted = true;
-    seedDev(globalThis.__manifest_store);
+    seedFixtures(globalThis.__manifest_store);
   }
   return globalThis.__manifest_store;
 }

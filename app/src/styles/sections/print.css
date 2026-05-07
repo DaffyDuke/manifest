@@ -6,7 +6,7 @@
   .cover{ height: auto; min-height: 0; padding: 0 0 20mm; page-break-after: always; }
   .cover::before, .cover::after{ display: none }
   .cover-seal{ opacity: .2 }
-  .cover-top, .cover-bot, .cover-scroll{ color: oklch(0.55 0 0) }
+  .cover-scroll{ color: oklch(0.55 0 0) }
   .cover-title{ color: oklch(0.18 0 0) }
   .cover-title .word{ opacity:1; transform:none; animation:none }
   .cover-title .ai::after{ transform: scaleX(1); animation: none; background: oklch(0.62 0 0) }
@@ -19,8 +19,7 @@
   .p-grid{ border-color: oklch(0.78 0 0) }
   .principle{ border-color: oklch(0.78 0 0) !important; cursor: default }
   .principle:hover{ background: transparent }
-  #tweaks, .print-btn, .sign-form, .sign-action, .cover-scroll{ display:none !important }
+  #tweaks, .print-btn, .sign-form, .sign-action, .cover-scroll, .floating-header, .floating-sign{ display:none !important }
   a{ color: oklch(0.18 0 0); text-decoration:none }
-  .seal-circle{ box-shadow: none; background: none }
   footer.doc-footer{ border-color: oklch(0.78 0 0) }
 }

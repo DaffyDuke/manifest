@@ -1,5 +1,6 @@
 ---
 import Page from '~/components/layout/Page.astro';
+import FloatingChrome from '~/components/layout/FloatingChrome.astro';
 import Cover from '~/components/sections/Cover.astro';
 import Preamble from '~/components/sections/Preamble.astro';
 import Values from '~/components/sections/Values.astro';
@@ -11,6 +12,8 @@ import TweaksPanel from '~/components/tweaks/TweaksPanel.astro';
 import ClientApp from '~/components/ClientApp.astro';
 ---
 <Page>
+  <span id="top"></span>
+  <FloatingChrome />
   <Cover />
   <div class="wrap">
     <Preamble />

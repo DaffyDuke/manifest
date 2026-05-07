@@ -1,7 +1,5 @@
 /* ============ RESPONSIVE ============ */
 @media (max-width: 900px){
-  .cover-top, .cover-bot{flex-wrap: wrap; gap: 10px}
-  .cover-top nav, .cover-top .lang{display: flex; gap: 12px}
   .preamble{grid-template-columns: 1fr; gap: 16px}
   .chapter-open{grid-template-columns: 1fr; gap: 16px}
   .chapter-mark .folio::after{display:none}
@@ -18,5 +16,4 @@
     grid-template-columns: 48px 1fr;
   }
   .signature{grid-template-columns: 1fr}
-  .seal{justify-self: start}
 }
