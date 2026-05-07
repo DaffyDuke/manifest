@@ -1,0 +1,36 @@
+/* ============ FOOTER ============ */
+.doc-footer{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 3vh, 36px) 0 clamp(28px, 4vh, 48px);
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.footer-link{
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-link svg{ width: 14px; height: 14px; }
+.footer-link:hover{ color: var(--ink); }
+.footer-text{
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  font-size: 11px;
+}
+.footer-year{
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px){
+  .doc-footer{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
