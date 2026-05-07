@@ -92,14 +92,14 @@ export function attachHeroParallax(): void {
   const wm = document.querySelector<HTMLElement>('.cover-watermark');
   if (!wm) return;
   let raf = 0;
-  let tx = -2, ty = 2; // baseline offset matches CSS (translate(-2vw, 2vh))
+  let tx = 0, ty = 0;
   function paint() {
     raf = 0;
-    wm!.style.transform = `translate(calc(-2vw + ${tx}px), calc(2vh + ${ty}px))`;
+    wm!.style.transform = `translate(calc(-50% - 2vw + ${tx}px), calc(-50% + 2vh + ${ty}px))`;
   }
   window.addEventListener('mousemove', (e) => {
-    tx = (e.clientX / window.innerWidth - 0.5) * 22;
-    ty = (e.clientY / window.innerHeight - 0.5) * 22;
+    tx = (e.clientX / window.innerWidth - 0.5) * 24;
+    ty = (e.clientY / window.innerHeight - 0.5) * 24;
     if (!raf) raf = requestAnimationFrame(paint);
   }, { passive: true });
 }

@@ -12,25 +12,49 @@
   isolation: isolate;
 }
 
-/* Oversized Fraunces watermark behind the title. */
+/* AIDD logo as oversized watermark — 3 separate elements that assemble in sequence. */
 .cover-watermark{
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-family: var(--serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 144, "wght" 320;
-  font-size: clamp(360px, 96vw, 1600px);
-  line-height: 1;
-  color: oklch(from var(--accent) l c h / 0.05);
+  left: 50%;
+  top: 50%;
+  width: min(82vmin, 880px);
+  height: min(82vmin, 880px);
+  transform: translate(calc(-50% - 2vw), calc(-50% + 2vh));
+  color: oklch(from var(--accent) l c h / 0.07);
   pointer-events: none;
   z-index: -1;
-  letter-spacing: -0.06em;
   user-select: none;
   -webkit-user-select: none;
-  transform: translate(-2vw, 2vh);
-  filter: blur(0.4px);
+  filter: blur(0.3px);
+  overflow: visible;
+}
+.cover-watermark line,
+.cover-watermark circle{
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.cw-bar-small{
+  animation: cw-small-in 0.85s cubic-bezier(.16,.84,.24,1) .25s forwards;
+}
+.cw-dot{
+  animation: cw-dot-in 0.6s cubic-bezier(.16,.84,.24,1) .65s forwards;
+}
+.cw-bar-big{
+  animation: cw-big-in 1.1s cubic-bezier(.16,.84,.24,1) .95s forwards;
+}
+@keyframes cw-small-in{
+  from{ opacity: 0; transform: translateY(14px) scale(.86); }
+  to  { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes cw-dot-in{
+  0%  { opacity: 0; transform: scale(0); }
+  60% { opacity: 1; transform: scale(1.2); }
+  100%{ opacity: 1; transform: scale(1); }
+}
+@keyframes cw-big-in{
+  from{ opacity: 0; transform: translateY(-22px) scale(.92); }
+  to  { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Hairline rules running edge-to-edge. */
@@ -256,8 +280,9 @@
     gap: 10px;
   }
   .cover-watermark{
-    font-size: clamp(280px, 140vw, 800px);
-    transform: translate(0, 4vh);
+    width: min(120vmin, 640px);
+    height: min(120vmin, 640px);
+    transform: translate(-50%, calc(-50% + 4vh));
   }
 }
 
