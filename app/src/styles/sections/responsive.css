@@ -109,6 +109,25 @@
   .values-note p{ font-size: 17px; line-height: 1.45; }
   .values-epigraph p{ font-size: clamp(16px, 4.5vw, 20px); }
 
+  /* Signature — tighter wall, single-column cards, button comfortable to tap */
+  .signature{ padding: 40px 0 56px; }
+  .sign-cta{ gap: 12px; }
+  .sign-btn{ padding: 10px 18px 10px 10px; gap: 12px; }
+  .sign-btn-icon{ width: 28px; height: 28px; }
+  .sign-btn-icon svg{ width: 15px; height: 15px; }
+  .sign-btn-label{ font-size: 15px; }
+  .sign-btn-kicker{ font-size: 9px; letter-spacing: 0.18em; }
+  .sign-btn-chev{ font-size: 16px; }
+  .sign-cta-note{ font-size: 14px; max-width: 36ch; }
+
+  .sig-wall-head{ grid-template-columns: 1fr; gap: 8px; text-align: center; }
+  .sig-wall-rule{ display: none; }
+  .sig-grid{ grid-template-columns: 1fr; gap: 10px; }
+  .sig-card{ padding: 12px; }
+  .sig-avatar{ width: 40px; height: 40px; }
+  .sig-name{ font-size: 15px; }
+  .sig-affil{ font-size: 9.5px; letter-spacing: 0.14em; }
+
   /* Principles — single column, comfortable padding */
   .principles{ padding-bottom: 48px; }
   .principle{

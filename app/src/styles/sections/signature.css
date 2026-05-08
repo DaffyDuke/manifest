@@ -1,0 +1,238 @@
+/* ============ SIGNATURE — section + button + wall ============ */
+
+.signature{
+  padding: clamp(48px, 8vh, 96px) 0 clamp(64px, 10vh, 120px);
+  border-top: 1px solid var(--rule);
+}
+
+/* CTA block — button + note, centered, restrained. */
+.sign-cta{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: clamp(24px, 4vh, 40px) 0 clamp(40px, 7vh, 64px);
+}
+.sign-cta-note{
+  font-family: var(--serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 72, "wght" 360;
+  font-size: 15px;
+  color: var(--ink-3);
+  max-width: 44ch;
+  text-align: center;
+  line-height: 1.5;
+}
+.sign-cta-note a{
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+  transition: color .2s, text-decoration-color .2s;
+}
+.sign-cta-note a:hover{ color: var(--ink); text-decoration-color: var(--accent); }
+
+/* Sign button — dark pill, editorial-typography, single CTA */
+.sign-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 22px 12px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, oklch(0.22 0.04 250), oklch(0.14 0.025 250));
+  color: oklch(0.97 0.01 240);
+  text-decoration: none;
+  border: 1px solid oklch(0.97 0.01 240 / 0.08);
+  box-shadow:
+    0 1px 0 0 oklch(0.55 0.10 250 / 0.40) inset,
+    0 0 0 1px oklch(0.97 0.01 240 / 0.04) inset,
+    0 18px 38px -16px oklch(0.14 0.03 250 / 0.50),
+    0 4px 10px -2px oklch(0.18 0.012 60 / 0.20);
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, filter .25s;
+  font-family: var(--mono);
+}
+.sign-btn:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 1px 0 0 oklch(0.55 0.10 250 / 0.45) inset,
+    0 0 0 1px oklch(0.97 0.01 240 / 0.06) inset,
+    0 24px 48px -16px oklch(0.14 0.03 250 / 0.62),
+    0 8px 16px -4px oklch(0.18 0.012 60 / 0.30);
+}
+.sign-btn:active{ transform: translateY(-1px); }
+.sign-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.sign-btn-icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 7px;
+  background: oklch(0.97 0.01 240);
+  color: oklch(0.18 0.025 250);
+  flex: none;
+}
+.sign-btn-icon svg{ width: 17px; height: 17px; }
+
+.sign-btn-body{
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+.sign-btn-label{
+  font-family: var(--serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: oklch(0.97 0.01 240);
+  text-transform: none;
+}
+.sign-btn-kicker{
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: oklch(0.62 0.02 240);
+}
+.sign-btn-chev{
+  font-family: var(--serif);
+  font-size: 18px;
+  color: oklch(0.78 0.02 240);
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), color .25s;
+  margin-left: 4px;
+}
+.sign-btn:hover .sign-btn-chev{
+  transform: translateX(3px);
+  color: oklch(0.97 0.01 240);
+}
+
+/* Wall */
+.sig-wall{ padding: clamp(16px, 3vh, 32px) 0 0; }
+
+.sig-wall-head{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 clamp(28px, 4vh, 40px);
+  padding: 0;
+}
+.sig-wall-rule{ height: 1px; background: var(--rule); }
+.sig-wall-count{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.sig-wall-count strong{
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "wght" 380;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  margin-right: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sig-grid{
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.sig-card{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 14px 12px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s;
+}
+.sig-card:hover{
+  transform: translateY(-2px);
+  border-color: oklch(from var(--ink) l c h / 0.25);
+  box-shadow: 0 14px 28px -16px oklch(0.18 0.012 60 / 0.35);
+}
+
+.sig-link{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+  min-width: 0;
+}
+
+.sig-avatar{
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  object-fit: cover;
+}
+
+.sig-meta{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.sig-name{
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 72, "wght" 380;
+  font-size: 15.5px;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sig-affil{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sig-linkedin{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  color: var(--ink-3);
+  background: transparent;
+  flex: none;
+  transition: color .2s, background .2s;
+}
+.sig-linkedin:hover{
+  color: oklch(0.45 0.10 250);
+  background: oklch(0.45 0.10 250 / 0.08);
+}
+.sig-linkedin svg{ width: 14px; height: 14px; }
+
+@media print{
+  .sign-cta, .sig-linkedin{ display: none !important; }
+  .sig-card{ border-color: oklch(0.78 0 0); box-shadow: none; }
+}

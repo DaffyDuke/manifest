@@ -1,0 +1,38 @@
+---
+import SignButton from '~/components/signature/SignButton.astro';
+import SignatureWall from '~/components/signature/SignatureWall.astro';
+---
+<section id="sign" class="signature">
+  <div class="chapter-open reveal">
+    <div class="chapter-mark">
+      <div class="folio">Folio 3</div>
+      <span class="drop">3</span>
+      <div class="roman">Chapter 3</div>
+    </div>
+    <div class="chapter-body">
+      <div class="chapter-eyebrow"><span class="pip"></span> <span>Sign &mdash; make it public</span></div>
+      <h2>If this reflects how you <em>already work</em>, claim it.</h2>
+      <div class="chapter-lede">
+        <svg class="fleuron" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M22 4 C 28 14, 40 14, 40 22 C 40 30, 28 30, 22 40 C 16 30, 4 30, 4 22 C 4 14, 16 14, 22 4 Z" stroke="currentColor" stroke-width="1" fill="none"/>
+          <circle cx="22" cy="22" r="2" fill="currentColor"/>
+        </svg>
+        <p>
+          One YAML file, one pull request, on GitHub. No backend, no form, no
+          email harvest. Your name lives next to the manifesto, in public.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sign-cta reveal">
+    <SignButton />
+    <p class="sign-cta-note">
+      Five lines to fill, reviewed within a few days. The
+      <a href="https://github.com/ai-driven-dev/manifest/blob/main/SIGNATORIES.md" target="_blank" rel="noopener">guide</a>
+      walks through it.
+    </p>
+  </div>
+
+  <SignatureWall />
+</section>

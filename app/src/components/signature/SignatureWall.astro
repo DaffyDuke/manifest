@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('signatories');
+const sigs = entries
+  .map((e) => e.data)
+  .sort((a, b) => a.signed_on.localeCompare(b.signed_on));
+
+const count = sigs.length;
+---
+<div class="sig-wall">
+  <div class="sig-wall-head">
+    <span class="sig-wall-rule" aria-hidden="true"></span>
+    <span class="sig-wall-count">
+      <strong>{count}</strong> {count === 1 ? 'signatory' : 'signatories'}
+    </span>
+    <span class="sig-wall-rule" aria-hidden="true"></span>
+  </div>
+
+  {count > 0 && (
+    <ul class="sig-grid" role="list">
+      {sigs.map((s) => (
+        <li class="sig-card">
+          <a
+            class="sig-link"
+            href={`https://github.com/${s.github}`}
+            target="_blank"
+            rel="noopener"
+            aria-label={`${s.name} on GitHub`}
+          >
+            <img
+              class="sig-avatar"
+              src={`https://github.com/${s.github}.png?size=128`}
+              alt=""
+              loading="lazy"
+              width="64"
+              height="64"
+            />
+            <span class="sig-meta">
+              <span class="sig-name">{s.name}</span>
+              {s.affiliation && <span class="sig-affil">{s.affiliation}</span>}
+            </span>
+          </a>
+          {s.linkedin && (
+            <a
+              class="sig-linkedin"
+              href={s.linkedin}
+              target="_blank"
+              rel="noopener"
+              aria-label={`${s.name} on LinkedIn`}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.13 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.66 0h4.37v1.92h.06c.61-1.16 2.1-2.38 4.32-2.38 4.62 0 5.47 3.04 5.47 7v8.46h-4.55v-7.5c0-1.79-.03-4.09-2.49-4.09-2.5 0-2.88 1.95-2.88 3.96V22H7.88V8z"/>
+              </svg>
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
