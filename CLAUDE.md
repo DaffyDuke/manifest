@@ -5,10 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Ce que c'est
 
 Manifesto for AI-Driven Development — Astro 4 SSR app, dockerisée, avec store
-en mémoire (signatures, votes, feedback) et 1:1 visuel avec l'ancienne page
-single-file `index.html`. Le worktree d'origine contenait un seul HTML
-monolithique : il a été migré vers `app/` (Astro + TypeScript + Vitest +
-Playwright).
+en mémoire (signatures, votes, feedback). Le worktree d'origine contenait un
+seul HTML monolithique : il a été migré vers `app/` (Astro + TypeScript +
+Vitest + Playwright). La migration est terminée — l'app Astro est désormais sa
+propre source de vérité (plus de parité 1:1 avec l'ancien `index.html`).
 
 Cousin de `../website/` (Astro, ai-driven-dev.fr) mais **totalement
 indépendant** : ne partage aucun asset ni config. Ne pas importer depuis
@@ -42,7 +42,6 @@ npx playwright test       # Playwright e2e (api, sign, vote, visual)
 app/
 ├── Dockerfile, compose.yaml, .dockerignore
 ├── astro.config.mjs       SSR + @astrojs/node standalone
-├── public/baseline/       Original index.html, servi à /baseline pour parité visuelle
 ├── src/
 │   ├── content/           Données éditoriales : principles.ts, values.ts, terms.ts, seeds.ts
 │   ├── styles/
@@ -55,7 +54,7 @@ app/
 │   ├── components/
 │   │   ├── layout/Page.astro
 │   │   ├── sections/{Cover,Preamble,Values,Principles,Signature}.astro
-│   │   ├── values/ValueArt.astro
+│   │   ├── values/{ValueArt,Quadrant}.astro
 │   │   ├── principles/{PrincipleGrid,PrincipleCard}.astro
 │   │   ├── terminal/TerminalAnim.astro
 │   │   ├── signature/{SignDialog,SignatureWall}.astro
@@ -69,7 +68,6 @@ app/
 │           ├── votes.ts       POST +1/-1
 │           └── feedback.ts    POST reason + alternative
 └── tests/
-    ├── parity-text.ts        AC-9 — content ↔ original baseline
     ├── check-component-loc.sh AC-6 — LOC budget
     └── e2e/{api,sign,vote,visual}.spec.ts
 ```
@@ -81,7 +79,7 @@ app/
 - `store-provider.md` — interface-first, swappable, framework-agnostic.
 - `styles-tokens.md` — `oklch()` uniquement, pas de hex/HSL hors `tokens.css`.
 - `docker.md` — multi-stage Node 22 alpine, non-root, port 4321.
-- `testing.md` — Vitest unit + Playwright e2e + visual diff ≤ 1 %.
+- `testing.md` — Vitest unit + Playwright e2e + régression visuelle du cover ≤ 1 % (snapshot Astro, plus de baseline).
 
 ## Conventions
 
@@ -94,7 +92,7 @@ app/
 ## Édition du contenu
 
 - Ajouter/modifier un principe : `app/src/content/principles.ts`.
-- Ajouter/modifier une valeur : `app/src/content/values.ts` + ASCII art dans `ValueArt.astro`.
+- Ajouter/modifier une valeur : `app/src/content/values.ts` (le champ `quad` alimente le quadrant 2×2 de `Quadrant.astro`) + ASCII art dans `ValueArt.astro`.
 - Ajouter/modifier un terminal : `app/src/content/terms.ts`.
 - Modifier la palette par défaut : `app/src/styles/tokens.css`.
 

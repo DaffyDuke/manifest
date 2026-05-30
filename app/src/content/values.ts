@@ -1,19 +1,25 @@
 /**
  * Each "value" pairs a left (preferred) concept with a right (devalued) concept,
- * shown in the values plate. Visual ASCII art is rendered inline in the page
- * (see `Values.astro`). This file holds the structured editorial content.
+ * shown in the values plate. The four values are the core of the manifesto, laid
+ * out as a 2×2 quadrant (see `Quadrant.astro`) that builds up the new shape of a
+ * developer's value: Method · Ownership · Understanding · Impact. Visual ASCII art
+ * is rendered inline (see `ValueArt.astro`). This file holds the structured content.
  */
 export interface ValueEntry {
   /** 1-based folio */
   n: number;
-  /** Anim id used by the original (`v1` … `v4`) */
+  /** Anim id used by the ASCII art (`v1` … `v4`) */
   anim: 'v1' | 'v2' | 'v3' | 'v4';
   /** Left (preferred) noun */
   left: string;
   /** Right (devalued) noun */
   right: string;
+  /** Quadrant cell label — the essence word shown in the 2×2 grid */
+  quad: string;
   /** Short note rendered under the pair (HTML allowed) */
   note: string;
+  /** Long-form description of the principle (plain text / light HTML) */
+  body: string;
   /** Stable id (kept for anchors and reveal targeting) */
   id: string;
 }
@@ -23,32 +29,40 @@ export const VALUES: ValueEntry[] = [
     n: 1,
     anim: 'v1',
     id: 'V-1',
-    left: 'Direction',
-    right: 'drift',
-    note: 'We <em class="emph">steer<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 30 2, 55 5 T 98 3"/></svg></em>. We are not <em class="emph">carried<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 28 3, 52 6 T 98 4"/></svg></em>.',
+    left: 'Method',
+    right: 'Model',
+    quad: 'Method',
+    note: 'The method <em class="emph">endures<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 30 2, 55 5 T 98 3"/></svg></em>. The model <em class="emph">fades<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 52 6 T 98 4"/></svg></em>.',
+    body: 'Bet on the method, not the model — every LLM release will fade. Your method endures and standardizes your team’s practices across models, vendors, and versions.',
   },
   {
     n: 2,
     anim: 'v2',
     id: 'V-2',
-    left: 'Methods',
-    right: 'models',
-    note: 'The method <em class="emph">stays<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 32 2, 56 5 T 98 4"/></svg></em>. Models <em class="emph">rotate<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 54 6 T 98 3"/></svg></em>.',
+    left: 'Ownership',
+    right: 'Delegation',
+    quad: 'Ownership',
+    note: 'You <em class="emph">own<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 32 2, 56 5 T 98 4"/></svg></em> it. You don’t just <em class="emph">delegate<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 54 6 T 98 3"/></svg></em> it.',
+    body: 'You own what you ship — even what the AI wrote. Every commit is signed by a human; the AI accelerates, you decide.',
   },
   {
     n: 3,
     anim: 'v3',
     id: 'V-3',
-    left: 'Evolution',
-    right: 'perfection',
-    note: 'Code is <em class="emph">never final<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 30 2, 55 5 T 98 3"/></svg></em>. Why ship it <em class="emph">frozen<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 52 6 T 98 4"/></svg></em>?',
+    left: 'Understanding',
+    right: 'Acceptance',
+    quad: 'Understanding',
+    note: 'You <em class="emph">understand<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 30 2, 55 5 T 98 3"/></svg></em> before you <em class="emph">accept<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 52 6 T 98 4"/></svg></em>.',
+    body: 'Don’t accept what you don’t understand. The AI is your collaborator — not your replacement.',
   },
   {
     n: 4,
     anim: 'v4',
     id: 'V-4',
-    left: 'Learning',
-    right: 'shortcut',
-    note: 'Ease <em class="emph">gifted<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 32 2, 56 5 T 98 4"/></svg></em>. Growth <em class="emph">earned<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 54 6 T 98 3"/></svg></em>.',
+    left: 'Outcome',
+    right: 'Output',
+    quad: 'Impact',
+    note: 'Ship <em class="emph">impact<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 4 Q 32 2, 56 5 T 98 4"/></svg></em>. Not <em class="emph">output<svg class="und" aria-hidden="true" viewBox="0 0 100 7" preserveAspectRatio="none"><path d="M2 5 Q 30 3, 54 6 T 98 3"/></svg></em>.',
+    body: 'Writing code is easy. Building product is not. Ship small, iterate fast, keep feedback loops short — avoid vanity metrics. The only number that serves is the business.',
   },
 ];

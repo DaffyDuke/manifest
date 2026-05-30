@@ -1,6 +1,7 @@
 ---
 import { VALUES } from '~/content/values';
 import ValueArt from '~/components/values/ValueArt.astro';
+import Quadrant from '~/components/values/Quadrant.astro';
 ---
 <section id="values" class="values">
   <div class="chapter-open reveal">
@@ -17,10 +18,12 @@ import ValueArt from '~/components/values/ValueArt.astro';
           <path d="M22 4 C 28 14, 40 14, 40 22 C 40 30, 28 30, 22 40 C 16 30, 4 30, 4 22 C 4 14, 16 14, 22 4 Z" stroke="currentColor" stroke-width="1" fill="none"/>
           <circle cx="22" cy="22" r="2" fill="currentColor"/>
         </svg>
-        <p>Each value below is a compass, not a rule. Read the line. Feel which side the weight falls on — then notice that the other side never disappears. It simply weighs less.</p>
+        <p>Each value below is a compass, not a rule. Together they map the four places a developer's value now lives — <em>method</em>, <em>ownership</em>, <em>understanding</em>, <em>impact</em>. Read the line. Feel which side the weight falls on — then notice that the other side never disappears. It simply weighs less.</p>
       </div>
     </div>
   </div>
+
+  <Quadrant />
 
   <div class="values-epigraph reveal">
     <p>Four tensions. Each side still matters. <em>The weight falls left.</em></p>

@@ -1,0 +1,94 @@
+/* ============ QUADRANT (2×2 — the new shape of a developer's value) ============ */
+.quad{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: clamp(28px, 5vh, 56px) 0 clamp(10px, 2vh, 22px);
+  border: 1px solid var(--rule);
+  position: relative;
+}
+/* Neutralize the base .reveal fade on the container; cells animate individually. */
+.quad.reveal{ opacity: 1; transform: none; transition: none; }
+
+.quad-cell{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.4vh, 14px);
+  padding: clamp(22px, 3vw, 40px) clamp(20px, 2.6vw, 36px);
+  min-height: clamp(150px, 20vh, 220px);
+  text-decoration: none;
+  color: var(--ink);
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+  overflow: hidden;
+}
+/* Outer frame already drawn — drop the top border on the first row and the left
+   border on the first column so only the inner cross remains. */
+.quad-cell:nth-child(1), .quad-cell:nth-child(2){ border-top: none; }
+.quad-cell:nth-child(odd){ border-left: none; }
+
+/* Hue per cell — matches the values plate progression (values.css). */
+.quad-cell:nth-child(1){ --value-hue: 28; }
+.quad-cell:nth-child(2){ --value-hue: 50; }
+.quad-cell:nth-child(3){ --value-hue: 150; }
+.quad-cell:nth-child(4){ --value-hue: 245; }
+
+.qc-n{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: oklch(0.55 0.13 var(--value-hue, 28));
+}
+.qc-quad{
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 144, "wght" 360;
+  font-size: clamp(26px, 3.4vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.qc-pair{
+  font-family: var(--mono);
+  font-size: clamp(11px, 1vw, 13px);
+  letter-spacing: .03em;
+  color: var(--ink-3);
+  margin-top: auto;
+}
+.qc-left{ color: oklch(0.45 0.13 var(--value-hue, 28)); font-variation-settings: "wght" 600; }
+.qc-over{ font-style: italic; opacity: .7; padding: 0 2px; }
+.qc-right{
+  text-decoration: line-through;
+  text-decoration-color: oklch(0.6 0.16 var(--value-hue, 28));
+  opacity: .8;
+}
+
+/* Accent wash that fills in behind the cell on reveal. */
+.quad-cell::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: oklch(0.55 0.15 var(--value-hue, 28) / 0.05);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cell-by-cell reveal, staggered via --i (set inline per cell). */
+.quad-cell{ opacity: 0; transform: translateY(14px); }
+.quad.seen .quad-cell{
+  opacity: 1; transform: none;
+  transition: opacity .55s ease calc(var(--i) * 280ms),
+              transform .55s cubic-bezier(.2,.7,.2,1) calc(var(--i) * 280ms);
+}
+.quad.seen .quad-cell::before{
+  opacity: 1;
+  transition: opacity .6s ease calc(var(--i) * 280ms + .2s);
+}
+
+.quad-cell:hover .qc-quad{ color: oklch(0.5 0.16 var(--value-hue, 28)); }
+
+@media (prefers-reduced-motion: reduce){
+  .quad-cell{ opacity: 1; transform: none; }
+  .quad-cell::before{ opacity: 1; }
+  .quad.seen .quad-cell,
+  .quad.seen .quad-cell::before{ transition: none; }
+}

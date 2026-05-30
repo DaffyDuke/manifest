@@ -7,30 +7,7 @@ const { anim } = Astro.props;
 {anim === 'v1' && (
   <div class="value-art" data-anim="v1">
     <div class="va-col va-good">
-      <div class="va-col-head"><span class="va-col-label">direction</span><span class="va-col-badge">do</span></div>
-      <pre><span class="va-l" style="--i:0"><span class="va-cmd">$</span> aidd run</span>
-<span class="va-l" style="--i:1">  → plan       <span class="va-ok">✓</span></span>
-<span class="va-l" style="--i:2">  → implement  <span class="va-ok">✓</span></span>
-<span class="va-l" style="--i:3">  → review     <span class="va-ok">✓</span></span>
-<span class="va-l" style="--i:4">  → assert     <span class="va-ok">✓</span></span>
-<span class="va-l" style="--i:5"><span class="va-dim2">we set the ai's direction.</span><span class="va-cursor" style="--cd:1.4s"></span></span></pre>
-    </div>
-    <div class="va-sep"></div>
-    <div class="va-col va-bad">
-      <div class="va-col-head"><span class="va-col-label">drift</span><span class="va-col-badge">don't</span></div>
-      <pre><span class="va-l" style="--i:7"><span class="va-cmd">$</span> ai <span class="va-str">"add a delete button"</span></span>
-<span class="va-l" style="--i:8"><span class="va-key">+</span> DeleteButton.tsx          <span class="va-dim2">new</span></span>
-<span class="va-l" style="--i:9"><span class="va-dim2">———————————————</span></span>
-<span class="va-l" style="--i:10"><span class="va-err">⚠</span> DeleteBtn.tsx</span>
-<span class="va-l" style="--i:11">  <span class="va-dim2">already exists.</span></span>
-<span class="va-l" style="--i:12"><span class="va-dim2">ai didn't look.</span></span></pre>
-    </div>
-  </div>
-)}
-{anim === 'v2' && (
-  <div class="value-art" data-anim="v2">
-    <div class="va-col va-good">
-      <div class="va-col-head"><span class="va-col-label">methods</span><span class="va-col-badge">do</span></div>
+      <div class="va-col-head"><span class="va-col-label">method</span><span class="va-col-badge">do</span></div>
       <pre><span class="va-l" style="--i:0">  plan <span class="va-key">──→</span> implement</span>
 <span class="va-l" style="--i:1">    <span class="va-key">↑</span>          <span class="va-key">↓</span></span>
 <span class="va-l" style="--i:2">  assert <span class="va-key">←──</span> review</span>
@@ -40,7 +17,7 @@ const { anim } = Astro.props;
     </div>
     <div class="va-sep"></div>
     <div class="va-col va-bad">
-      <div class="va-col-head"><span class="va-col-label">models</span><span class="va-col-badge">don't</span></div>
+      <div class="va-col-head"><span class="va-col-label">model</span><span class="va-col-badge">don't</span></div>
       <pre><span class="va-l" style="--i:7"><span class="va-cmd">$</span> claude</span>
 <span class="va-l" style="--i:8"><span class="va-cmd">$</span> codex</span>
 <span class="va-l" style="--i:9"><span class="va-cmd">$</span> cursor</span>
@@ -50,49 +27,71 @@ const { anim } = Astro.props;
     </div>
   </div>
 )}
-{anim === 'v3' && (
-  <div class="value-art" data-anim="v3">
+{anim === 'v2' && (
+  <div class="value-art" data-anim="v2">
     <div class="va-col va-good">
-      <div class="va-col-head"><span class="va-col-label">evolution</span><span class="va-col-badge">do</span></div>
-      <pre><span class="va-l" style="--i:0">mon  v0.1 shipped       <span class="va-dim2">users:</span> <span class="va-ok">12</span></span>
-<span class="va-l" style="--i:1">tue  v0.2 shipped       <span class="va-dim2">users:</span> <span class="va-ok">47</span></span>
-<span class="va-l" style="--i:2">wed  v0.3 shipped       <span class="va-dim2">users:</span> <span class="va-ok">180</span></span>
-<span class="va-l" style="--i:3">thu  v0.4 shipped       <span class="va-dim2">users:</span> <span class="va-ok">410</span></span>
+      <div class="va-col-head"><span class="va-col-label">ownership</span><span class="va-col-badge">do</span></div>
+      <pre><span class="va-l" style="--i:0"><span class="va-cmd">$</span> git commit</span>
+<span class="va-l" style="--i:1">  → reviewed   <span class="va-ok">✓</span></span>
+<span class="va-l" style="--i:2">  → tested     <span class="va-ok">✓</span></span>
+<span class="va-l" style="--i:3"><span class="va-key">Signed-off-by:</span> you <span class="va-ok">✓</span></span>
 <span class="va-l" style="--i:4"><span class="va-dim2">———————————————</span></span>
-<span class="va-l" style="--i:5"><span class="va-dim2">ship · learn · ship again.</span><span class="va-cursor" style="--cd:1.4s"></span></span></pre>
+<span class="va-l" style="--i:5"><span class="va-dim2">the human owns it.</span><span class="va-cursor" style="--cd:1.4s"></span></span></pre>
     </div>
     <div class="va-sep"></div>
     <div class="va-col va-bad">
-      <div class="va-col-head"><span class="va-col-label">perfection</span><span class="va-col-badge">don't</span></div>
-      <pre><span class="va-l" style="--i:7">mon  <span class="va-str">"almost there"</span>       <span class="va-dim2">users:</span> <span class="va-warn">0</span></span>
-<span class="va-l" style="--i:8">tue  <span class="va-str">"fixing edges"</span>       <span class="va-dim2">users:</span> <span class="va-warn">0</span></span>
-<span class="va-l" style="--i:9">wed  <span class="va-str">"polishing api"</span>      <span class="va-dim2">users:</span> <span class="va-warn">0</span></span>
-<span class="va-l" style="--i:10">thu  <span class="va-str">"one more pass"</span>      <span class="va-dim2">users:</span> <span class="va-warn">0</span></span>
-<span class="va-l" style="--i:11"><span class="va-dim2">———————————————</span></span>
-<span class="va-l" style="--i:12"><span class="va-dim2">perfect · invisible.</span></span></pre>
+      <div class="va-col-head"><span class="va-col-label">delegation</span><span class="va-col-badge">don't</span></div>
+      <pre><span class="va-l" style="--i:7"><span class="va-cmd">$</span> ai <span class="va-str">"ship it"</span></span>
+<span class="va-l" style="--i:8"><span class="va-key">+</span> 1,240 lines      <span class="va-dim2">merged</span></span>
+<span class="va-l" style="--i:9"><span class="va-dim2">———————————————</span></span>
+<span class="va-l" style="--i:10"><span class="va-err">⚠</span> no review</span>
+<span class="va-l" style="--i:11">  <span class="va-dim2">nobody read it.</span></span>
+<span class="va-l" style="--i:12"><span class="va-warn">who owns this?</span></span></pre>
+    </div>
+  </div>
+)}
+{anim === 'v3' && (
+  <div class="value-art" data-anim="v3">
+    <div class="va-col va-good">
+      <div class="va-col-head"><span class="va-col-label">understanding</span><span class="va-col-badge">do</span></div>
+      <pre><span class="va-l" style="--i:0"><span class="va-key">ai:</span> auth via JWT.</span>
+<span class="va-l" style="--i:1"><span class="va-cmd">$</span> why? we use</span>
+<span class="va-l" style="--i:2">  HttpOnly sessions.</span>
+<span class="va-l" style="--i:3"><span class="va-key">ai:</span> rewriting. <span class="va-ok">✓</span></span>
+<span class="va-l" style="--i:4"><span class="va-dim2">———————————————</span></span>
+<span class="va-l" style="--i:5"><span class="va-dim2">you understood.</span><span class="va-cursor" style="--cd:1.5s"></span></span></pre>
+    </div>
+    <div class="va-sep"></div>
+    <div class="va-col va-bad">
+      <div class="va-col-head"><span class="va-col-label">acceptance</span><span class="va-col-badge">don't</span></div>
+      <pre><span class="va-l" style="--i:7"><span class="va-key">ai:</span> auth via JWT.</span>
+<span class="va-l" style="--i:8"><span class="va-cmd">$</span> ok            <span class="va-dim2">accept</span></span>
+<span class="va-l" style="--i:9"><span class="va-dim2">———————————————</span></span>
+<span class="va-l" style="--i:10"><span class="va-err">⚠</span> 3am</span>
+<span class="va-l" style="--i:11">  <span class="va-dim2">why is this here?</span></span>
+<span class="va-l" style="--i:12"><span class="va-warn">nobody knows.</span></span></pre>
     </div>
   </div>
 )}
 {anim === 'v4' && (
   <div class="value-art" data-anim="v4">
     <div class="va-col va-good">
-      <div class="va-col-head"><span class="va-col-label">learning</span><span class="va-col-badge">do</span></div>
-      <pre><span class="va-l" style="--i:0"><span class="va-cmd">$</span> vim <span class="va-str">aidd-docs/rules.md</span></span>
-<span class="va-l" style="--i:1">  <span class="va-ok">✓</span> rule added</span>
-<span class="va-l" style="--i:2"><span class="va-key">ai:</span> noted. <span class="va-ok">✓</span></span>
-<span class="va-l" style="--i:3"><span class="va-cmd">$</span> ai <span class="va-str">"implement Y"</span></span>
-<span class="va-l" style="--i:4">  → <span class="va-key">aligned</span> · shipped <span class="va-ok">✓</span></span>
-<span class="va-l" style="--i:5"><span class="va-dim2">memory compounds.</span><span class="va-cursor" style="--cd:1.6s"></span></span></pre>
+      <div class="va-col-head"><span class="va-col-label">outcome</span><span class="va-col-badge">do</span></div>
+      <pre><span class="va-l" style="--i:0">features shipped   <span class="va-ok">✓</span></span>
+<span class="va-l" style="--i:1">bugs avoided       <span class="va-ok">✓</span></span>
+<span class="va-l" style="--i:2">users impacted   <span class="va-ok">+410</span></span>
+<span class="va-l" style="--i:3"><span class="va-dim2">———————————————</span></span>
+<span class="va-l" style="--i:4"><span class="va-dim2">the business moved.</span><span class="va-cursor" style="--cd:1.4s"></span></span></pre>
     </div>
     <div class="va-sep"></div>
     <div class="va-col va-bad">
-      <div class="va-col-head"><span class="va-col-label">shortcut</span><span class="va-col-badge">don't</span></div>
-      <pre><span class="va-l" style="--i:7"><span class="va-cmd">$</span> /fix  <span class="va-warn">still broken</span></span>
-<span class="va-l" style="--i:8"><span class="va-cmd">$</span> /fix  <span class="va-warn">still broken</span></span>
-<span class="va-l" style="--i:9"><span class="va-cmd">$</span> /fix  <span class="va-warn">still broken</span></span>
-<span class="va-l" style="--i:10"><span class="va-cmd">$</span> /debug · /fix</span>
+      <div class="va-col-head"><span class="va-col-label">output</span><span class="va-col-badge">don't</span></div>
+      <pre><span class="va-l" style="--i:7">lines generated  <span class="va-warn">12k</span></span>
+<span class="va-l" style="--i:8">tokens burned   <span class="va-warn">1.2M</span></span>
+<span class="va-l" style="--i:9">commits/day       <span class="va-warn">38</span></span>
+<span class="va-l" style="--i:10"><span class="va-dim2">———————————————</span></span>
 <span class="va-l" style="--i:11"><span class="va-dim2">…</span></span>
-<span class="va-l" style="--i:12"><span class="va-err">patch hell.</span></span></pre>
+<span class="va-l" style="--i:12"><span class="va-err">vanity · zero impact.</span></span></pre>
     </div>
   </div>
 )}
