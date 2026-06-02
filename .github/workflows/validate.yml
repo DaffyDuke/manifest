@@ -5,10 +5,6 @@ on:
   push:
     branches: [main]
 
-env:
-  # Run JS-based actions on Node 24 (Node 20 is deprecated, forced 2026-06-16).
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,14 +12,14 @@ jobs:
       run:
         working-directory: app
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Full history so the signature-date generator (prebuild) can read
           # each signatory file's add commit.
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
       - run: npm ci

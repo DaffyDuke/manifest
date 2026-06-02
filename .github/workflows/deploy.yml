@@ -27,8 +27,6 @@ env:
   CONTAINER_PORT: "4321"
   PUBLIC_ORIGIN: https://www.ai-driven-development.org
   INDEXNOW_KEY: a1f401c8d1e64cb99fbe0d7f4a462026
-  # Run JS-based actions on Node 24 (Node 20 is deprecated, forced 2026-06-16).
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   # ──────────────────────────────────────────────
@@ -47,14 +45,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           # Full history so the signature-date generator can read each
           # signatory file's add commit (git log --diff-filter=A).
           fetch-depth: 0
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -62,7 +60,7 @@ jobs:
 
       - name: Extract metadata (tags, labels)
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -70,14 +68,14 @@ jobs:
             type=raw,value=latest
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Set up Node.js
         # The self-hosted runner has no node on PATH; setup-node provides it for
         # the generator step below.
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
 
       - name: Generate signature dates from git
         # Derives signatures' dates from git history into
@@ -87,7 +85,7 @@ jobs:
 
       - name: Build and push Docker image
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./app
           file: ./app/Dockerfile

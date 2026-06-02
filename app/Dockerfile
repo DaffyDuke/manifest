@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 #
-# Astro 4 SSR (Node standalone adapter) — multi-stage build.
+# Astro 6 SSR (Node standalone adapter) — multi-stage build.
 # Compliant with aidd_docs/rules/architecture/docker.md:
 #   - Multi-stage: deps → build → runner
 #   - Runner runs prod-only node_modules (no devDeps)
@@ -11,26 +11,26 @@
 # .github/workflows/deploy.yml pipeline (self-hosted runner on AIDD).
 
 # ── Production dependencies (runner) ─────────────────────────────
-FROM node:22-alpine AS prod-deps
+FROM node:24-alpine AS prod-deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev --no-audit --no-fund
 
 # ── All dependencies (build stage needs Astro CLI = devDep) ──────
-FROM node:22-alpine AS build-deps
+FROM node:24-alpine AS build-deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci --no-audit --no-fund
 
 # ── Build ────────────────────────────────────────────────────────
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 COPY --from=build-deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
 # ── Runner ───────────────────────────────────────────────────────
-FROM node:22-alpine AS runner
+FROM node:24-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \
