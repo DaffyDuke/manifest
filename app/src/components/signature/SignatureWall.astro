@@ -12,6 +12,9 @@ const sigs = entries
   .sort((a, b) => a.signedAt.localeCompare(b.signedAt) || a.name.localeCompare(b.name));
 
 const count = sigs.length;
+
+const dateFmt = new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' });
+const humanDate = (iso: string) => (iso ? dateFmt.format(new Date(`${iso}T00:00:00Z`)) : '');
 ---
 <div class="sig-wall">
   <div class="sig-wall-head">
@@ -62,6 +65,9 @@ const count = sigs.length;
             )}
           </div>
           {s.statement && <p class="sig-statement">{s.statement.trim()}</p>}
+          {s.signedAt && (
+            <time class="sig-date" datetime={s.signedAt}>Signed {humanDate(s.signedAt)}</time>
+          )}
         </li>
       ))}
     </ul>
