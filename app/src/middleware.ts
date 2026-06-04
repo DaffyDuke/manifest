@@ -91,7 +91,6 @@ function applyLinkHeader(headers: Headers): void {
   appendHeader(headers, 'Link', `<${absoluteUrl('/schema/home.jsonld')}>; rel="describedby"; type="application/ld+json"`);
   appendHeader(headers, 'Link', `<${absoluteUrl('/mcp')}>; rel="mcp"; type="application/json"`);
   appendHeader(headers, 'Link', `<${absoluteUrl('/ask')}>; rel="nlweb"; type="application/json"`);
-  appendHeader(headers, 'Link', `<${absoluteUrl('/site.webmanifest')}>; rel="manifest"; type="application/manifest+json"`);
 }
 
 function compressedResponse(response: Response, request: Request): Response {

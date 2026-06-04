@@ -1,17 +1,22 @@
-/* ============ VALUE ART (ASCII illustrations, dark terminal) ============ */
+/* ============ VALUE ART — embedded dark code panels on a light document ============
+ * Rationale: on an ice-white canvas, the art panels flip to dark (var(--ink) navy)
+ * for visual contrast and technical authority — like embedded code blocks in a spec.
+ * All animation / JS-contract classes are preserved; only colours change.
+ * =========================================================================== */
+
+/* ---- Outer shell: the "embedded code panel" ---- */
 .pr-art{
-  background: oklch(0.155 0.015 60);
-  border-radius: 12px;
+  background: var(--ink);               /* navy — the document's own "black" */
+  border-radius: var(--radius-card);
   padding: 0;
   align-self: stretch;
   position: relative;
   overflow: hidden;
-  box-shadow:
-    0 0 0 1px oklch(0.26 0.02 60),
-    0 1px 0 oklch(0.32 0.02 60) inset,
-    0 24px 48px -32px oklch(0.1 0.015 60 / .5);
+  /* Hairline outline only — no heavy shadow */
+  box-shadow: 0 0 0 1px oklch(0.181 0.117 266 / 0.6);
 }
-/* CRT scanlines overlay */
+
+/* CRT scanline overlay — kept but dialled back on a light doc */
 .pr-art::after{
   content: "";
   position: absolute;
@@ -19,14 +24,16 @@
   pointer-events: none;
   background-image: repeating-linear-gradient(
     0deg,
-    oklch(1 0 0 / 0.025) 0px,
-    oklch(1 0 0 / 0.025) 1px,
+    oklch(1 0 0 / 0.018) 0px,
+    oklch(1 0 0 / 0.018) 1px,
     transparent 1px,
     transparent 3px
   );
   z-index: 3;
-  border-radius: 12px;
+  border-radius: var(--radius-card);
 }
+
+/* ---- Inner code illustration ---- */
 .value-art{
   font-family: var(--mono);
   font-size: clamp(11px, 0.92vw, 13.5px);
@@ -34,12 +41,15 @@
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
   gap: clamp(18px, 2.2vw, 36px);
-  color: oklch(0.92 0.015 60);
+  /* Ice-white text on navy — high contrast, readable */
+  color: var(--paper);
   padding: clamp(26px, 3vw, 40px) clamp(22px, 2.4vw, 34px);
   position: relative;
   z-index: 1;
   min-height: clamp(260px, 32vh, 340px);
 }
+
+/* ---- Column layout ---- */
 .va-col{
   display: flex;
   flex-direction: column;
@@ -51,30 +61,36 @@
   align-items: center;
   gap: 10px;
 }
+
+/* Column label: small tracked caps, muted ice */
 .va-col-label{
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: .18em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: oklch(0.58 0.015 60);
+  color: oklch(0.7 0.02 270);           /* muted ice on navy */
 }
+
+/* Badges: "do" = mint, "don't" = muted */
 .va-col-badge{
   font-family: var(--mono);
   font-size: 9px;
   padding: 3px 8px;
   border-radius: 3px;
-  letter-spacing: .15em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   font-weight: 500;
 }
 .va-col.va-good .va-col-badge{
-  background: oklch(0.52 0.17 var(--value-hue, 28) / 0.22);
-  color: oklch(0.82 0.17 var(--value-hue, 28));
+  background: oklch(0.72 0.13 162 / 0.20);   /* mint tint */
+  color: var(--mint);                          /* var(--mint) */
 }
 .va-col.va-bad .va-col-badge{
-  background: oklch(0.28 0.015 60);
-  color: oklch(0.66 0.015 60);
+  background: oklch(0.3 0.01 270);            /* dark navy chip */
+  color: oklch(0.65 0.02 270);                /* muted ice */
 }
+
+/* Pre blocks */
 .va-col pre{
   font-family: var(--mono);
   white-space: pre;
@@ -84,32 +100,59 @@
   line-height: inherit;
   color: inherit;
 }
-.va-col.va-bad pre{ color: oklch(0.62 0.015 60); }
+/* Don't-side: slightly dimmed vs do-side */
+.va-col.va-bad pre{
+  color: oklch(0.65 0.02 270);
+}
+
+/* Vertical divider between columns */
 .va-sep{
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    oklch(0.3 0.02 60) 10%,
-    oklch(0.3 0.02 60) 90%,
+    oklch(0.3 0.05 270) 10%,
+    oklch(0.3 0.05 270) 90%,
     transparent 100%
   );
   width: 1px;
   align-self: stretch;
 }
 
-/* Syntax highlighting classes */
-.value-art .va-ok{ color: oklch(0.74 0.15 150); }          /* green */
-.value-art .va-warn{ color: oklch(0.78 0.14 85); }         /* amber */
-.value-art .va-err{ color: oklch(0.66 0.18 28); }          /* red */
-.value-art .va-info{ color: oklch(0.72 0.14 240); }        /* blue */
-.value-art .va-dim2{ color: oklch(0.44 0.015 60); font-style: italic; }
-.value-art .va-key{
-  color: oklch(0.78 0.18 var(--value-hue, 28));
-  text-shadow: 0 0 8px oklch(0.78 0.18 var(--value-hue, 28) / 0.35);
+/* ---- Syntax tokens — restrained palette on navy ---- */
+
+/* Positive / do: mint */
+.value-art .va-ok{ color: var(--mint); }
+
+/* Warning: amber-ish on dark */
+.value-art .va-warn{ color: oklch(0.78 0.13 80); }
+
+/* Error: raspberry-adjacent, readable on navy */
+.value-art .va-err{ color: oklch(0.66 0.15 20); }
+
+/* Info: light cyan */
+.value-art .va-info{ color: oklch(0.74 0.12 220); }
+
+/* Dim/comment: muted ice */
+.value-art .va-dim2{
+  color: oklch(0.52 0.03 270);
+  font-style: normal;                   /* no italic — design rule */
 }
-.value-art .va-num{ color: oklch(0.68 0.12 var(--value-hue, 28)); }
-.value-art .va-cmd{ color: oklch(0.72 0.14 240); }         /* blue for $ */
-.value-art .va-str{ color: oklch(0.8 0.12 120); }          /* greenish for strings */
+
+/* Keywords / arrows / structural tokens: mint (do-side authority) */
+.value-art .va-key{
+  color: var(--mint);
+}
+
+/* Numbers */
+.value-art .va-num{ color: oklch(0.72 0.10 220); }
+
+/* Shell prompt $ */
+.value-art .va-cmd{ color: oklch(0.72 0.10 220); }
+
+/* Strings */
+.value-art .va-str{ color: oklch(0.80 0.11 155); }
+
+/* Generic pre fallback */
 .value-art pre{
   margin: 0;
   white-space: pre;
@@ -119,45 +162,55 @@
   font-size: inherit;
   line-height: inherit;
 }
-.value-art pre.va-dim{ color: oklch(0.58 0.015 60); }
+.value-art pre.va-dim{ color: oklch(0.55 0.02 270); }
+
+/* Label */
 .value-art .va-label{
-  color: oklch(0.54 0.015 60);
-  letter-spacing: .12em;
+  color: oklch(0.52 0.02 270);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.82em;
 }
-.value-art pre.va-dim .va-label{ opacity: .88; }
-.value-art .va-accent{
-  color: oklch(0.75 0.18 var(--value-hue, 28));
-  text-shadow: 0 0 8px oklch(0.75 0.18 var(--value-hue, 28) / 0.4);
-}
+.value-art pre.va-dim .va-label{ opacity: 0.88; }
 
-/* Char-level reveal (sequential via --i) */
-.value-art .va-c{ opacity: 0; }
+/* Accent — mint on dark, same authority as .va-key */
+.value-art .va-accent{ color: var(--mint); }
+
+/* ---- Char-level reveal (.va-c) — JS adds .on ---- */
+.value-art .va-c{
+  opacity: 0;
+}
 .value-art.on .va-c{
   opacity: 1;
-  transition: opacity .18s linear calc(var(--i, 0) * 50ms);
+  transition: opacity 0.18s linear calc(var(--i, 0) * 50ms);
 }
 
-/* Line-level reveal (sequential via --i, with soft slide) */
-.value-art .va-l{ opacity: 0; transform: translateY(4px); display: inline-block; }
+/* ---- Line-level reveal (.va-l) — staggered via --i ---- */
+.value-art .va-l{
+  opacity: 0;
+  transform: translateY(4px);
+  display: inline-block;
+}
 .value-art.on .va-l{
-  opacity: 1; transform: translateY(0);
-  transition: opacity .42s ease calc(var(--i, 0) * 220ms),
-              transform .42s ease calc(var(--i, 0) * 220ms);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.42s var(--ease-out) calc(var(--i, 0) * 220ms),
+    transform 0.42s var(--ease-out) calc(var(--i, 0) * 220ms);
 }
 
-/* V2 rotating models — whole-line highlight */
-.value-art .va-model-line{ transition: color .45s ease, text-shadow .45s ease; }
+/* ---- V2 rotating model highlight — .va-model-line.va-cur ---- */
+.value-art .va-model-line{
+  transition: color 0.45s var(--ease-out), text-shadow 0.45s var(--ease-out);
+}
 .value-art .va-model-line.va-cur{
-  color: oklch(0.82 0.18 var(--value-hue, 28));
-  text-shadow: 0 0 12px oklch(0.82 0.18 var(--value-hue, 28) / 0.5);
+  color: var(--mint);
 }
 .value-art .va-model-line.va-cur .va-dim2{
-  color: oklch(0.6 0.08 var(--value-hue, 28));
+  color: oklch(0.6 0.06 162);           /* mint-tinged dim for highlighted row */
 }
 
-/* Blinking terminal cursor */
+/* ---- Blinking cursor (.va-cursor) ---- */
 .value-art .va-cursor{
   display: inline-block;
   width: 0.55em;
@@ -173,28 +226,28 @@
   animation-delay: var(--cd, 2.8s);
 }
 @keyframes va-blink{
-  0%, 49%{ opacity: .9; }
+  0%,  49%{ opacity: 0.9; }
   50%, 100%{ opacity: 0; }
 }
 
-/* Sub-text reveal (per-value delay via --sd) */
+/* ---- Sub-text reveal (.va-sub) ---- */
 .value-art .va-sub{
   opacity: 0;
-  font-style: italic;
+  font-style: normal;
   font-size: 0.94em;
-  color: oklch(0.62 0.015 60);
+  color: oklch(0.55 0.02 270);
 }
 .value-art.on .va-sub{
   opacity: 1;
-  transition: opacity .6s ease var(--sd, 1s);
+  transition: opacity 0.6s var(--ease-out) var(--sd, 1s);
 }
 
-/* V4 flat arrow starts after stairs have revealed */
+/* ---- V4 flat arrow — delayed reveal ---- */
 .value-art[data-anim="v4"].on .va-c{
-  transition: opacity .18s linear calc(2.4s + var(--i, 0) * 35ms);
+  transition: opacity 0.18s linear calc(2.4s + var(--i, 0) * 35ms);
 }
 
-/* Epigraph — opening quote before the 4 values */
+/* ---- Epigraph — before the four values ---- */
 .values-epigraph{
   text-align: center;
   max-width: 54ch;
@@ -202,30 +255,33 @@
   padding: 0 clamp(16px, 3vw, 24px);
   position: relative;
 }
+/* Flanking hairlines */
 .values-epigraph::before,
 .values-epigraph::after{
   content: "";
   display: block;
-  width: 40px;
-  height: 1px;
+  width: 40px; height: 1px;
   background: var(--rule);
   margin: 14px auto;
 }
 .values-epigraph p{
-  font-family: var(--serif);
-  font-variation-settings: "opsz" 144, "wght" 310;
-  font-style: italic;
-  font-size: clamp(20px, 2.2vw, 30px);
-  line-height: 1.35;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-style: normal;                   /* no italic */
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1.45;
   color: var(--ink-2);
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
+/* em inside epigraph — emphasize via ink, weight, not italic */
 .values-epigraph p em{
+  font-style: normal;
   color: var(--ink);
-  font-variation-settings: "wght" 380;
-  font-style: italic;
+  font-weight: 500;
 }
 
+/* ---- Responsive: stack columns on narrow viewports ---- */
 @media (max-width: 960px){
   .value-art{
     grid-template-columns: 1fr;
@@ -237,25 +293,14 @@
     background: linear-gradient(
       to right,
       transparent 0%,
-      oklch(0.3 0.02 60) 10%,
-      oklch(0.3 0.02 60) 90%,
+      oklch(0.3 0.05 270) 10%,
+      oklch(0.3 0.05 270) 90%,
       transparent 100%
     );
   }
 }
 
 @media (max-width: 820px){
-  .plate-row{
-    grid-template-columns: 1fr;
-    gap: clamp(18px, 2.5vh, 28px);
-    padding: clamp(36px, 6vh, 52px) 0 clamp(24px, 4vh, 36px);
-  }
-  .pr-folio{
-    font-size: clamp(40px, 10vw, 60px);
-    padding-top: 0;
-    line-height: 0.9;
-  }
-  .pr-text .left{ font-size: clamp(34px, 8vw, 48px); }
   .value-art{
     font-size: 11px;
     line-height: 1.7;

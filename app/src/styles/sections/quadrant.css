@@ -5,11 +5,14 @@
   gap: 0;
   margin: clamp(28px, 5vh, 56px) 0 clamp(10px, 2vh, 22px);
   border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  overflow: hidden;
   position: relative;
 }
-/* Neutralize the base .reveal fade on the container; cells animate individually. */
+/* Neutralize base .reveal on the container — cells animate individually. */
 .quad.reveal{ opacity: 1; transform: none; transition: none; }
 
+/* ---- Cells ---- */
 .quad-cell{
   position: relative;
   display: flex;
@@ -19,76 +22,115 @@
   min-height: clamp(150px, 20vh, 220px);
   text-decoration: none;
   color: var(--ink);
+  background: var(--paper);
   border-top: 1px solid var(--rule);
   border-left: 1px solid var(--rule);
   overflow: hidden;
+  transition: background var(--dur-short) var(--ease-out);
 }
-/* Outer frame already drawn — drop the top border on the first row and the left
-   border on the first column so only the inner cross remains. */
-.quad-cell:nth-child(1), .quad-cell:nth-child(2){ border-top: none; }
+/* Outer frame provides the containing border — suppress redundant edges. */
+.quad-cell:nth-child(1),
+.quad-cell:nth-child(2){ border-top: none; }
 .quad-cell:nth-child(odd){ border-left: none; }
 
-/* Hue per cell — matches the values plate progression (values.css). */
-.quad-cell:nth-child(1){ --value-hue: 28; }
-.quad-cell:nth-child(2){ --value-hue: 50; }
-.quad-cell:nth-child(3){ --value-hue: 150; }
-.quad-cell:nth-child(4){ --value-hue: 245; }
-
+/* ---- Accent number ---- */
 .qc-n{
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
-  letter-spacing: .22em;
-  color: oklch(0.55 0.13 var(--value-hue, 28));
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
 }
+
+/* ---- Quadrant label — display type, bold ---- */
 .qc-quad{
-  font-family: var(--serif);
-  font-variation-settings: "opsz" 144, "wght" 360;
-  font-size: clamp(26px, 3.4vw, 44px);
+  font-family: var(--display);
+  font-weight: 700;
+  font-style: normal;
+  font-size: clamp(24px, 3.2vw, 42px);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--ink);
+  transition: color var(--dur-med) var(--ease-out);
 }
+
+/* ---- Pair: "left over right" — Inter Tight, small ---- */
 .qc-pair{
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: clamp(11px, 1vw, 13px);
-  letter-spacing: .03em;
+  letter-spacing: 0.02em;
   color: var(--ink-3);
   margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
 }
-.qc-left{ color: oklch(0.45 0.13 var(--value-hue, 28)); font-variation-settings: "wght" 600; }
-.qc-over{ font-style: italic; opacity: .7; padding: 0 2px; }
+.qc-left{
+  color: var(--ink);
+  font-weight: 500;
+}
+.qc-over{
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  opacity: 0.8;
+  padding: 0 2px;
+}
 .qc-right{
+  color: var(--ink-3);
   text-decoration: line-through;
-  text-decoration-color: oklch(0.6 0.16 var(--value-hue, 28));
-  opacity: .8;
+  text-decoration-color: var(--rule);
 }
 
-/* Accent wash that fills in behind the cell on reveal. */
+/* ---- Subtle hover wash — accent tint on --paper-2 ---- */
 .quad-cell::before{
   content: "";
   position: absolute; inset: 0;
-  background: oklch(0.55 0.15 var(--value-hue, 28) / 0.05);
+  background: var(--accent-soft);
   opacity: 0;
   pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease-out);
 }
+.quad-cell:hover{ background: var(--paper-2); }
+.quad-cell:hover .qc-quad{ color: var(--accent); }
+.quad-cell:hover::before{ opacity: 1; }
 
-/* Cell-by-cell reveal, staggered via --i (set inline per cell). */
-.quad-cell{ opacity: 0; transform: translateY(14px); }
+/* ---- Staggered cell reveal — JS adds .seen on .quad ---- */
+.quad-cell{
+  opacity: 0;
+  transform: translateY(14px);
+}
 .quad.seen .quad-cell{
-  opacity: 1; transform: none;
-  transition: opacity .55s ease calc(var(--i) * 280ms),
-              transform .55s cubic-bezier(.2,.7,.2,1) calc(var(--i) * 280ms);
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.55s var(--ease-out) calc(var(--i) * 280ms),
+    transform 0.55s var(--ease-out) calc(var(--i) * 280ms);
 }
 .quad.seen .quad-cell::before{
-  opacity: 1;
-  transition: opacity .6s ease calc(var(--i) * 280ms + .2s);
+  /* wash fades in slightly after the cell itself */
+  transition: opacity 0.6s var(--ease-out) calc(var(--i) * 280ms + 0.2s);
 }
-
-.quad-cell:hover .qc-quad{ color: oklch(0.5 0.16 var(--value-hue, 28)); }
 
 @media (prefers-reduced-motion: reduce){
   .quad-cell{ opacity: 1; transform: none; }
-  .quad-cell::before{ opacity: 1; }
+  .quad-cell::before{ opacity: 0; }
   .quad.seen .quad-cell,
   .quad.seen .quad-cell::before{ transition: none; }
+}
+
+/* ---- Mobile: stack single column ---- */
+@media (max-width: 600px){
+  .quad{
+    grid-template-columns: 1fr;
+  }
+  .quad-cell:nth-child(2){ border-top: 1px solid var(--rule); }
+  .quad-cell:nth-child(odd){ border-left: none; }
+  .quad-cell:nth-child(even){ border-left: none; }
+  .quad-cell{ border-top: 1px solid var(--rule); }
+  .quad-cell:nth-child(1){ border-top: none; }
 }

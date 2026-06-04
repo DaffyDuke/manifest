@@ -23,6 +23,9 @@ export function observeTerminals(selector = '.term'): void {
       const body = en.target.querySelector('.body');
       if (!body) return;
       if (en.isIntersecting) {
+        // .play unpauses the CSS line animations (.term .ln defaults to paused);
+        // re-setting the animation restarts the type-in on each entry.
+        en.target.classList.add('play');
         body.querySelectorAll<HTMLElement>('.ln').forEach((ln) => {
           ln.style.animation = 'none';
           // force reflow
@@ -84,6 +87,31 @@ export function observeValueArt(): void {
 }
 
 /**
+ * Spec index scroll-spy — highlights the sticky table-of-contents link for the
+ * section currently in view. No-op if the index isn't present (mobile / absent).
+ */
+export function observeSpecIndex(): void {
+  const links = Array.from(document.querySelectorAll<HTMLElement>('.si-link[data-spy]'));
+  if (!links.length) return;
+  const ids = links.map((l) => l.getAttribute('data-spy')).filter(Boolean) as string[];
+  const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+  if (!sections.length) return;
+  let current = '';
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) {
+      if (en.isIntersecting) {
+        const id = (en.target as HTMLElement).id;
+        if (id && id !== current) {
+          current = id;
+          links.forEach((l) => l.classList.toggle('active', l.getAttribute('data-spy') === id));
+        }
+      }
+    }
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+  sections.forEach((s) => io.observe(s));
+}
+
+/**
  * Hero parallax — drifts the cover watermark with the cursor for a printed-paper feel.
  * No-op if the user has reduced motion preference.
  */
@@ -95,7 +123,7 @@ export function attachHeroParallax(): void {
   let tx = 0, ty = 0;
   function paint() {
     raf = 0;
-    wm!.style.transform = `translate(calc(-50% - 2vw + ${tx}px), calc(-50% + 2vh + ${ty}px))`;
+    wm!.style.transform = `translate(calc(-50% + 24vw + ${tx}px), calc(-50% - 4vh + ${ty}px))`;
   }
   window.addEventListener('mousemove', (e) => {
     tx = (e.clientX / window.innerWidth - 0.5) * 24;

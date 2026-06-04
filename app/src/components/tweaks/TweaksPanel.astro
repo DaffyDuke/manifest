@@ -1,10 +1,10 @@
 ---
 const SWATCHES = [
-  { hue: 28,  label: 'Rust' },
-  { hue: 145, label: 'Moss' },
-  { hue: 250, label: 'Indigo' },
-  { hue: 310, label: 'Plum' },
-  { hue: 60,  label: 'Ochre' },
+  { hue: 275, label: 'Blue' },
+  { hue: 245, label: 'Indigo' },
+  { hue: 162, label: 'Mint' },
+  { hue: 9,   label: 'Rose' },
+  { hue: 60,  label: 'Amber' },
 ];
 ---
 <div id="tweaks" role="region" aria-label="Theme tweaks">
@@ -16,10 +16,10 @@ const SWATCHES = [
         <button
           class="swatch"
           type="button"
-          aria-pressed={s.hue === 28 ? 'true' : 'false'}
+          aria-pressed={s.hue === 275 ? 'true' : 'false'}
           aria-label={`Accent ${s.label}`}
           data-hue={s.hue}
-          style={`background: oklch(0.52 0.17 ${s.hue})`}
+          style={`background: oklch(0.54 0.246 ${s.hue})`}
         />
       ))}
     </div>
@@ -27,14 +27,14 @@ const SWATCHES = [
   <div class="row">
     <label for="paperSel">Paper</label>
     <select id="paperSel">
+      <option value="ice">Ice</option>
       <option value="warm">Warm</option>
-      <option value="cool">Cool</option>
-      <option value="ink">Ink</option>
+      <option value="slate">Slate</option>
     </select>
   </div>
   <div class="row">
-    <label for="serifScale">Serif size</label>
-    <input type="range" id="serifScale" min="0.9" max="1.15" step="0.01" aria-label="Serif size scale" />
+    <label for="serifScale">Type size</label>
+    <input type="range" id="serifScale" min="0.9" max="1.15" step="0.01" aria-label="Type size scale" />
   </div>
   <div class="row">
     <label for="rainbowToggle">Rainbow principles</label>

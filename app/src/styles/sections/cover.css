@@ -1,202 +1,151 @@
-/* ============ COVER — Typographic Monument ============ */
+/* ============ COVER — standard splash, light B&W ============ */
 .cover{
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
-  display: grid;
-  grid-template-columns: clamp(48px, 7vw, 120px) 1fr clamp(48px, 7vw, 120px);
-  grid-template-rows: clamp(48px, 8vh, 96px) 1fr clamp(48px, 8vh, 96px);
-  padding: clamp(20px, 3vh, 40px) clamp(20px, 4vw, 56px);
+  display: flex;
+  align-items: center;
+  padding: clamp(72px, 12vh, 132px) clamp(24px, 6vw, 96px);
   z-index: 2;
   overflow: hidden;
   isolation: isolate;
+  border-bottom: 1px solid var(--rule);
 }
 
-/* AIDD logo as oversized watermark — 3 separate elements that assemble in sequence. */
+/* AIDD mark — faint watermark, parallax hook (transform set by JS). */
 .cover-watermark{
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(78vmin, 820px);
-  height: min(78vmin, 820px);
-  transform: translate(calc(-50% - 2vw), calc(-50% + 2vh));
-  color: oklch(from var(--accent) l c h / 0.07);
+  left: 50%; top: 50%;
+  width: min(70vmin, 720px);
+  height: min(70vmin, 720px);
+  transform: translate(calc(-50% + 24vw), calc(-50% - 4vh));
+  color: oklch(from var(--ink) l c h / 0.05);
   pointer-events: none;
   z-index: -1;
-  user-select: none;
-  -webkit-user-select: none;
-  filter: blur(0.3px);
+  user-select: none; -webkit-user-select: none;
   overflow: visible;
 }
 .cover-watermark line,
-.cover-watermark circle{
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.cw-bar-small{
-  animation: cw-small-in 0.85s cubic-bezier(.16,.84,.24,1) .25s forwards;
-}
-.cw-dot{
-  animation: cw-dot-in 0.6s cubic-bezier(.16,.84,.24,1) .65s forwards;
-}
-.cw-bar-big{
-  animation: cw-big-in 1.1s cubic-bezier(.16,.84,.24,1) .95s forwards;
-}
-@keyframes cw-small-in{
-  from{ opacity: 0; transform: translateY(14px) scale(.86); }
-  to  { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes cw-dot-in{
-  0%  { opacity: 0; transform: scale(0); }
-  60% { opacity: 1; transform: scale(1.2); }
-  100%{ opacity: 1; transform: scale(1); }
-}
-@keyframes cw-big-in{
-  from{ opacity: 0; transform: translateY(-22px) scale(.92); }
-  to  { opacity: 1; transform: translateY(0) scale(1); }
-}
+.cover-watermark circle{ opacity: 0; transform-box: fill-box; transform-origin: center; }
+.cw-bar-small{ animation: cw-small-in 0.85s var(--ease-out) .25s forwards; }
+.cw-dot{ animation: cw-dot-in 0.6s var(--ease-out) .65s forwards; }
+.cw-bar-big{ animation: cw-big-in 1.1s var(--ease-out) .95s forwards; }
+@keyframes cw-small-in{ from{ opacity: 0; transform: translateY(14px) scale(.86); } to{ opacity: 1; transform: none; } }
+@keyframes cw-dot-in{ 0%{ opacity: 0; transform: scale(0); } 60%{ opacity: 1; transform: scale(1.2); } 100%{ opacity: 1; transform: scale(1); } }
+@keyframes cw-big-in{ from{ opacity: 0; transform: translateY(-22px) scale(.92); } to{ opacity: 1; transform: none; } }
 
-/* Hairline rules running edge-to-edge. */
+/* Hairline rules. */
 .cover-rule{
   position: absolute;
-  left: 0; right: 0;
-  height: 1px;
-  background: var(--ink);
-  opacity: 0.55;
-  z-index: 3;
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: cover-rule-draw 1.6s cubic-bezier(.16,.84,.24,1) .15s forwards;
+  left: clamp(24px, 6vw, 96px); right: clamp(24px, 6vw, 96px);
+  height: 1px; background: var(--rule);
+  z-index: 3; transform: scaleX(0); transform-origin: left;
+  animation: cover-rule-draw 1.4s var(--ease-out) .15s forwards;
 }
-.cover-rule-top{ top: clamp(54px, 8vh, 96px); }
-.cover-rule-bottom{ bottom: clamp(54px, 8vh, 96px); }
-@keyframes cover-rule-draw{
-  to{ transform: scaleX(1); }
-}
+.cover-rule-top{ top: clamp(40px, 7vh, 72px); }
+.cover-rule-bottom{ bottom: clamp(40px, 7vh, 72px); }
+@keyframes cover-rule-draw{ to{ transform: scaleX(1); } }
 
-/* The title — left-aligned, asymmetric, monstrous scale, broken lines. */
+.cover-stage{ position: relative; width: 100%; max-width: 1160px; }
+
+/* Standard header line. */
+.cover-std{
+  font-family: var(--sans);
+  font-size: clamp(11px, 1.05vw, 13px);
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: clamp(20px, 3vh, 34px);
+}
+.cover-std .cs-sep{ color: var(--accent); margin: 0 .35em; }
+
+/* Title — huge, confident, Bricolage. */
 .cover-title{
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  align-self: center;
-  font-family: var(--serif);
-  font-variation-settings: "opsz" 144, "wght" 320;
-  font-weight: 320;
-  font-size: clamp(64px, 13.5vw, 220px);
-  line-height: 0.86;
-  letter-spacing: -0.035em;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(48px, 12vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
   color: var(--ink);
-  max-width: 13ch;
-  text-wrap: balance;
-  margin-left: clamp(-16px, -1vw, -8px);
-  position: relative;
+  max-width: 16ch;
+  overflow-wrap: anywhere; min-width: 0;
 }
-.cover-title .line{
-  display: block;
-}
-.cover-title .line-2{
-  margin-left: clamp(120px, 18vw, 320px);
-  font-size: 0.42em;
-  letter-spacing: -0.01em;
-  margin-top: 0.04em;
-  margin-bottom: 0.04em;
-}
-.cover-title .line-3{
-  margin-left: clamp(60px, 8vw, 140px);
-}
-.cover-title .line-4{
-  margin-left: clamp(180px, 28vw, 420px);
-  text-indent: -0.06em;
-}
-.cover-title .word{
-  display: inline-block;
-}
+.cover-title .line{ display: block; }
+.cover-title .word{ display: inline-block; }
+
 .reveal-word{
-  opacity: 0;
-  transform: translateY(0.5em);
-  animation: word-rise 1.1s cubic-bezier(.16,.84,.24,1) forwards;
+  opacity: 0; transform: translateY(0.4em);
+  animation: word-rise 0.95s var(--ease-out) forwards;
   animation-delay: var(--d, 0s);
 }
-@keyframes word-rise{
-  to{ opacity: 1; transform: none; }
-}
-.cover-title .for{
-  font-style: italic;
-  font-variation-settings: "opsz" 144, "wght" 300;
-  color: var(--ink-3);
-  position: relative;
-}
-.cover-title .for::before{
-  content: "";
-  position: absolute;
-  left: -0.9em;
-  top: 50%;
-  width: 0.6em;
-  height: 1px;
-  background: var(--ink-3);
-  transform: scaleX(0);
-  transform-origin: right;
-  animation: for-rule .8s cubic-bezier(.16,.84,.24,1) .55s forwards;
-}
-@keyframes for-rule{ to{ transform: scaleX(1); } }
+@keyframes word-rise{ to{ opacity: 1; transform: none; } }
 
-/* AI-Driven gets a redaction-stamp treatment. */
-.cover-title .ai{
-  position: relative;
-  display: inline-block;
-  color: var(--ink);
-}
-.cover-title .ai-text{
-  position: relative;
-  z-index: 1;
-}
+/* "Manifesto" line — slightly quieter, the descriptor. */
+.cover-title .for{ color: var(--ink-2); }
+
+/* "AI-Driven" — one restrained accent moment: a thin accent underline sweeps in. */
+.cover-title .ai{ position: relative; display: inline-block; color: var(--ink); }
+.cover-title .ai-text{ position: relative; z-index: 1; }
 .cover-title .ai-strike{
   position: absolute;
-  left: -0.04em;
-  right: -0.02em;
-  top: 50%;
-  height: 0.18em;
+  left: 0.02em; right: 0.02em; bottom: 0.06em;
+  height: 0.07em;
   background: var(--accent);
-  transform: translateY(-50%) scaleX(0);
-  transform-origin: left;
-  border-radius: 1px;
-  z-index: 0;
-  pointer-events: none;
-  animation: ai-imprint 1.4s cubic-bezier(.7,.05,.3,1) 1.0s forwards;
-  box-shadow: 0 0 24px oklch(from var(--accent) l c h / 0.45);
+  border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  z-index: 0; pointer-events: none;
+  animation: ai-underline 0.9s var(--ease-out) 0.9s forwards;
 }
-@keyframes ai-imprint{
-  0%{ transform: translateY(-50%) scaleX(0); opacity: 0.9; }
-  60%{ transform: translateY(-50%) scaleX(1); opacity: 0.95; }
-  100%{ transform: translateY(-50%) scaleX(1); opacity: 0.32; }
+@keyframes ai-underline{ to{ transform: scaleX(1); } }
+
+/* Foot — lede + two entry links. */
+.cover-foot{
+  margin-top: clamp(32px, 5vh, 60px);
+  display: flex; flex-direction: column;
+  gap: clamp(20px, 3vh, 32px);
+  max-width: 56ch;
 }
+.cover-lede{
+  font-family: var(--sans);
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.cover-cta{ display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+.cover-link{
+  display: inline-flex; align-items: center; gap: .5em;
+  min-height: 44px; padding: 0 18px;
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.1vw, 15px);
+  font-weight: 500; letter-spacing: -0.005em;
+  color: var(--ink); text-decoration: none;
+  border: 1px solid var(--rule); border-radius: var(--radius-pill);
+  transition: border-color .2s var(--ease-out), color .2s var(--ease-out), background .2s var(--ease-out);
+}
+.cover-link:hover{ border-color: var(--ink); }
+.cover-link-primary{
+  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+}
+.cover-link-primary:hover{ border-color: var(--accent); filter: brightness(1.08); }
 
 @media (max-width: 760px){
-  .cover{
-    grid-template-columns: 1fr;
-    grid-template-rows: clamp(48px, 8vh, 80px) 1fr clamp(48px, 8vh, 80px);
-  }
-  .cover-title{
-    grid-column: 1 / -1;
-    margin-left: 0;
-    font-size: clamp(64px, 16vw, 120px);
-  }
-  .cover-title .line-2{ margin-left: 18vw; }
-  .cover-title .line-3{ margin-left: 6vw; }
-  .cover-title .line-4{ margin-left: 28vw; }
+  .cover{ padding: clamp(64px, 12vh, 96px) clamp(20px, 6vw, 40px); }
+  .cover-rule{ left: clamp(20px, 6vw, 40px); right: clamp(20px, 6vw, 40px); }
+  .cover-title{ font-size: clamp(46px, 15vw, 92px); }
   .cover-watermark{
-    width: min(120vmin, 640px);
-    height: min(120vmin, 640px);
-    transform: translate(-50%, calc(-50% + 4vh));
+    width: min(120vmin, 520px); height: min(120vmin, 520px);
+    transform: translate(-50%, calc(-50% + 10vh));
+    color: oklch(from var(--ink) l c h / 0.04);
   }
+  .cover-cta{ width: 100%; }
+  .cover-link{ flex: 1 1 auto; justify-content: center; }
 }
 
 @media print{
-  .cover{ height: auto; min-height: 0; padding: 0 0 20mm; page-break-after: always; }
-  .cover-rule{ animation: none !important; opacity: 1; transform: none !important; }
+  .cover{ height: auto; min-height: 0; padding: 0 0 16mm; page-break-after: always; border: none; }
+  .cover-rule{ animation: none !important; transform: none !important; }
   .cover-watermark{ display: none; }
-  .cover-title{ font-size: clamp(64px, 11vw, 168px); }
+  .cover-title{ font-size: clamp(48px, 10vw, 110px); }
   .cover-title .word{ opacity: 1; transform: none; animation: none; }
-  .cover-title .ai-strike{ transform: translateY(-50%) scaleX(1); opacity: 0.32; animation: none; }
+  .cover-title .ai-strike{ transform: scaleX(1); animation: none; }
+  .cover-foot{ opacity: 1; transform: none; animation: none; }
 }

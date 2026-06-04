@@ -1,22 +1,38 @@
-/* ============ SIGNATURE — section + button + wall ============ */
+/* ============ SIGNATURE — section, CTA, signatory wall ============ */
 
 .signature{
-  padding: clamp(48px, 8vh, 96px) 0 clamp(64px, 10vh, 120px);
-  border-top: 1px solid var(--rule);
+  padding: 0 0 clamp(56px, 9vh, 100px);
 }
+/* Contribute links under the CTA — organisation, then repository. */
+.sign-contribute{
+  margin-top: 14px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-3);
+  text-align: center;
+}
+.sign-contribute a{
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+  transition: color .2s var(--ease-out), text-decoration-color .2s var(--ease-out);
+}
+.sign-contribute a:hover{ color: var(--accent); text-decoration-color: var(--accent); }
+.sign-contribute .sc-sep{ margin: 0 .5em; opacity: .5; }
 
-/* CTA block — button + note, centered, restrained. */
+/* ---- CTA block — the page's single strong colour moment ---- */
 .sign-cta{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   margin: clamp(24px, 4vh, 40px) 0 clamp(40px, 7vh, 64px);
 }
+
 .sign-cta-note{
-  font-family: var(--serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 72, "wght" 360;
+  font-family: var(--sans);
+  font-style: normal;
   font-size: 15px;
   color: var(--ink-3);
   max-width: 44ch;
@@ -28,53 +44,61 @@
   text-decoration: underline;
   text-decoration-color: var(--rule);
   text-underline-offset: 3px;
-  transition: color .2s, text-decoration-color .2s;
+  transition: color var(--dur-short) var(--ease-out),
+              text-decoration-color var(--dur-short) var(--ease-out);
 }
-.sign-cta-note a:hover{ color: var(--ink); text-decoration-color: var(--accent); }
+.sign-cta-note a:hover{
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
 
-/* Sign button — dark pill, editorial-typography, single CTA */
+/* ---- Sign button — accent-blue fill pill, the one strong CTA ---- */
 .sign-btn{
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  padding: 12px 22px 12px 14px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, oklch(0.22 0.04 250), oklch(0.14 0.025 250));
-  color: oklch(0.97 0.01 240);
+  padding: 10px 20px 10px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--accent-ink);
   text-decoration: none;
-  border: 1px solid oklch(0.97 0.01 240 / 0.08);
+  border: 1px solid transparent;
   box-shadow:
-    0 1px 0 0 oklch(0.55 0.10 250 / 0.40) inset,
-    0 0 0 1px oklch(0.97 0.01 240 / 0.04) inset,
-    0 18px 38px -16px oklch(0.14 0.03 250 / 0.50),
-    0 4px 10px -2px oklch(0.18 0.012 60 / 0.20);
-  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, filter .25s;
-  font-family: var(--mono);
+    0 1px 0 0 oklch(1 0 0 / 0.12) inset,
+    0 8px 24px -8px oklch(0.54 0.246 275 / 0.45);
+  transition:
+    transform var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    filter var(--dur-short) var(--ease-out);
+  font-family: var(--sans);
 }
 .sign-btn:hover{
   transform: translateY(-2px);
-  filter: brightness(1.06);
+  filter: brightness(1.08);
   box-shadow:
-    0 1px 0 0 oklch(0.55 0.10 250 / 0.45) inset,
-    0 0 0 1px oklch(0.97 0.01 240 / 0.06) inset,
-    0 24px 48px -16px oklch(0.14 0.03 250 / 0.62),
-    0 8px 16px -4px oklch(0.18 0.012 60 / 0.30);
+    0 1px 0 0 oklch(1 0 0 / 0.15) inset,
+    0 14px 32px -8px oklch(0.54 0.246 275 / 0.58);
 }
 .sign-btn:active{ transform: translateY(-1px); }
-.sign-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; }
+.sign-btn:focus-visible{
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
 
+/* Icon chip — white on accent */
 .sign-btn-icon{
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 32px; height: 32px;
-  border-radius: 7px;
-  background: oklch(0.97 0.01 240);
-  color: oklch(0.18 0.025 250);
+  border-radius: 6px;
+  background: var(--accent-ink);
+  color: var(--accent);
   flex: none;
 }
 .sign-btn-icon svg{ width: 17px; height: 17px; }
 
+/* Label area */
 .sign-btn-body{
   display: inline-flex;
   flex-direction: column;
@@ -82,59 +106,66 @@
   text-align: left;
 }
 .sign-btn-label{
-  font-family: var(--serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 144, "wght" 380;
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 600;
   font-size: 16px;
   letter-spacing: -0.01em;
   line-height: 1;
-  color: oklch(0.97 0.01 240);
-  text-transform: none;
+  color: var(--accent-ink);
 }
 .sign-btn-kicker{
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.20em;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: oklch(0.62 0.02 240);
+  color: oklch(from var(--accent-ink) l c h / 0.70);
 }
+
+/* Chevron */
 .sign-btn-chev{
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 18px;
-  color: oklch(0.78 0.02 240);
-  transition: transform .25s cubic-bezier(.2,.7,.2,1), color .25s;
+  color: oklch(from var(--accent-ink) l c h / 0.80);
+  transition:
+    transform var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
   margin-left: 4px;
 }
 .sign-btn:hover .sign-btn-chev{
   transform: translateX(3px);
-  color: oklch(0.97 0.01 240);
+  color: var(--accent-ink);
 }
 
-/* Wall */
-.sig-wall{ padding: clamp(16px, 3vh, 32px) 0 0; }
+/* ---- Signatory wall ---- */
+.sig-wall{
+  padding: clamp(16px, 3vh, 32px) 0 0;
+}
 
+/* Wall header — count between two hairlines */
 .sig-wall-head{
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 16px;
   margin: 0 0 clamp(28px, 4vh, 40px);
-  padding: 0;
 }
-.sig-wall-rule{ height: 1px; background: var(--rule); }
+.sig-wall-rule{
+  height: 1px;
+  background: var(--rule);
+}
 .sig-wall-count{
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
   color: var(--ink-3);
   white-space: nowrap;
 }
 .sig-wall-count strong{
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-variation-settings: "opsz" 144, "wght" 380;
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 700;
   font-size: 16px;
   letter-spacing: -0.01em;
   text-transform: none;
@@ -143,14 +174,16 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- Signature grid ---- */
 .sig-grid{
   list-style: none;
   margin: 0; padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: clamp(12px, 1.6vw, 20px);
+  gap: clamp(10px, 1.4vw, 18px);
 }
 
+/* ---- Signature card — light panel, hairline border ---- */
 .sig-card{
   position: relative;
   display: flex;
@@ -159,18 +192,24 @@
   padding: 14px 14px 14px 12px;
   background: var(--paper-2);
   border: 1px solid var(--rule);
-  border-radius: 10px;
-  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s;
+  border-radius: var(--radius-card);
+  transition:
+    transform var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out);
 }
+.sig-card:hover{
+  transform: translateY(-2px);
+  background: var(--paper-3);
+  border-color: var(--accent-soft);
+  box-shadow: 0 8px 24px -12px oklch(0.54 0.246 275 / 0.18);
+}
+
 .sig-top{
   display: flex;
   align-items: center;
   gap: 12px;
-}
-.sig-card:hover{
-  transform: translateY(-2px);
-  border-color: oklch(from var(--ink) l c h / 0.25);
-  box-shadow: 0 14px 28px -16px oklch(0.18 0.012 60 / 0.35);
 }
 
 .sig-link{
@@ -183,6 +222,7 @@
   min-width: 0;
 }
 
+/* Avatar */
 .sig-avatar{
   width: 48px; height: 48px;
   border-radius: 50%;
@@ -199,20 +239,21 @@
   min-width: 0;
 }
 .sig-name{
-  font-family: var(--serif);
-  font-variation-settings: "opsz" 72, "wght" 380;
-  font-size: 15.5px;
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
   line-height: 1.2;
   color: var(--ink);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .sig-affil{
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 10px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
   white-space: nowrap;
@@ -220,26 +261,28 @@
   text-overflow: ellipsis;
 }
 
+/* Statement quote */
 .sig-statement{
   margin: 0;
-  padding-top: 2px;
-  font-family: var(--serif);
-  font-variation-settings: "opsz" 28, "wght" 360;
-  font-style: italic;
-  font-size: 13.5px;
-  line-height: 1.5;
+  padding-top: 8px;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--ink-2);
-  border-top: 1px solid oklch(from var(--rule) l c h / 0.6);
+  border-top: 1px solid var(--rule);
 }
 
+/* Date stamp */
 .sig-date{
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
 
+/* LinkedIn icon — subtle, no fill */
 .sig-linkedin{
   display: inline-flex;
   align-items: center;
@@ -249,15 +292,31 @@
   color: var(--ink-3);
   background: transparent;
   flex: none;
-  transition: color .2s, background .2s;
+  transition:
+    color var(--dur-short) var(--ease-out),
+    background var(--dur-short) var(--ease-out);
 }
 .sig-linkedin:hover{
-  color: oklch(0.45 0.10 250);
-  background: oklch(0.45 0.10 250 / 0.08);
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 .sig-linkedin svg{ width: 14px; height: 14px; }
 
+/* ---- Print ---- */
 @media print{
-  .sign-cta, .sig-linkedin{ display: none !important; }
-  .sig-card{ border-color: oklch(0.78 0 0); box-shadow: none; }
+  .sign-cta,
+  .sig-linkedin{ display: none !important; }
+  .sig-card{ border-color: var(--rule); box-shadow: none; }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 560px){
+  .sig-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 400px){
+  .sig-grid{
+    grid-template-columns: 1fr;
+  }
 }

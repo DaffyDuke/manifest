@@ -1,11 +1,15 @@
-/* ============ PRINCIPLES ============ */
-.principles{ padding: 0 0 clamp(60px, 10vh, 120px); }
+/* ============ PRINCIPLES — twelve commitments, citable reference grid ============ */
+.principles{ padding: 0 0 clamp(16px, 2.5vh, 28px); }
+
+/* ---- Grid ---- */
 .p-grid{
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 0;
   border-top: 1px solid var(--rule);
 }
+
+/* ---- Card ---- */
 .principle{
   grid-column: span 6;
   padding: clamp(32px, 4.5vh, 52px) clamp(28px, 3.2vw, 52px);
@@ -16,92 +20,147 @@
   gap: 22px;
   align-items: start;
   overflow: hidden;
-  --value-hue: var(--p-hue, 28);
+  background: var(--paper);
+  transition: background var(--dur-short) var(--ease-out);
+  /* preserve JS hooks */
+  --value-hue: var(--p-hue, 270);
 }
 .principle:nth-child(odd){
   border-right: 1px solid var(--rule);
 }
+.principle:hover{
+  background: var(--paper-2);
+}
 
-/* Ghost Roman folio watermark */
+/* Ghost folio watermark — faint ink numeral, large, top-right */
 .principle .p-folio{
   position: absolute;
   top: clamp(16px, 2.2vh, 26px);
   right: clamp(18px, 2.2vw, 32px);
-  font-family: var(--serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 144, "wght" 220;
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 800;
   font-size: clamp(80px, 10vw, 150px);
   line-height: 0.8;
-  color: oklch(0.45 0.14 var(--value-hue, 28));
-  opacity: 0.09;
+  color: var(--ink);
+  opacity: 0.04;
   letter-spacing: -0.05em;
   user-select: none;
   pointer-events: none;
   z-index: 0;
-  transition: opacity .4s;
+  transition: opacity var(--dur-med) var(--ease-out);
 }
-.principle:hover .p-folio{ opacity: 0.18; }
+.principle:hover .p-folio{ opacity: 0.07; }
 .principle > *{ position: relative; z-index: 1; }
 
+/* ---- Number ---- */
 .p-num{
-  font-family: var(--serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 144, "wght" 340;
-  font-size: clamp(40px, 4.2vw, 60px);
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 700;
+  font-size: clamp(38px, 4vw, 56px);
   line-height: 1;
-  color: oklch(0.48 0.12 var(--value-hue, 28));
-  letter-spacing: -0.02em;
-  transition: color .3s;
-  padding-top: 4px;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  padding-top: 6px;
+  /* Anchor cite affordance */
+  position: relative;
 }
+/* Optional hover cite marker — §N */
+.p-num::after{
+  content: " §";
+  font-size: 0.38em;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  vertical-align: super;
+  opacity: 0;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.principle:hover .p-num::after{ opacity: 1; }
+
+/* ---- Body ---- */
 .p-body{ padding-top: 8px; }
+
 .p-lead{
-  font-family: var(--serif);
-  font-variation-settings: "opsz" 72, "wght" 360;
-  font-size: clamp(22px, 2.1vw, 28px);
-  line-height: 1.24;
-  letter-spacing: -0.01em;
+  font-family: var(--display);
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(20px, 1.9vw, 26px);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
   color: var(--ink);
   margin-bottom: 14px;
   text-wrap: pretty;
 }
+
+/* ---- Highlight span — a clean accent underline that grows in on scroll-in.
+   Background-based (no absolute SVG): reliable across line wraps and content-visibility. ---- */
 .p-lead .hl{
-  position: relative;
-  display: inline-block;
   color: var(--ink);
-  font-variation-settings: "wght" 440;
-  background: linear-gradient(
-    to bottom,
-    transparent 58%,
-    oklch(0.52 0.17 var(--value-hue, 28) / 0.2) 58%,
-    oklch(0.52 0.17 var(--value-hue, 28) / 0.2) 92%,
-    transparent 92%
-  ) no-repeat left center / 0% 100%;
-  transition: background-size .9s cubic-bezier(.7,.1,.2,1) .3s;
-  padding: 0 3px;
+  font-weight: 700;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  background-size: 100% 2px;
+  padding-bottom: 2px;
 }
-.principle.seen .p-lead .hl{ background-size: 100% 100%; }
-.p-lead .hl svg.und{
-  position: absolute;
-  left: -3px; right: -3px;
-  bottom: -4px;
-  width: calc(100% + 6px);
-  height: 7px;
-  overflow: visible;
-  pointer-events: none;
+/* legacy injected squiggle (if any) stays hidden */
+.p-lead .hl svg.und{ display: none; }
+/* Draw the underline in as the card scrolls into view — pure CSS scroll timeline,
+   so it always fires (no JS / .seen dependency) and can never get stuck.
+   Fallback (no scroll-timeline) = the static full underline above. */
+@media (prefers-reduced-motion: no-preference){
+  @supports (animation-timeline: view()){
+    .p-lead .hl{
+      background-size: 0% 2px;
+      animation: hl-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 18% cover 40%;
+    }
+    @keyframes hl-grow{ to{ background-size: 100% 2px; } }
+  }
 }
-.p-lead .hl svg.und path{
-  stroke: oklch(0.52 0.17 var(--value-hue, 28));
-  stroke-width: 1.6;
-  fill: none;
-  stroke-linecap: round;
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
-  transition: stroke-dashoffset .85s cubic-bezier(.7,.1,.2,1) .5s;
-}
-.principle.seen .p-lead .hl svg.und path{ stroke-dashoffset: 0; }
+
+/* ---- Sub-text ---- */
 .p-sub{
   font-family: var(--sans);
-  font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+  font-style: normal;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
   max-width: 48ch;
+}
+
+/* ---- Footnote ---- */
+.p-footnote{
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.p-footnote sup{
+  color: var(--accent);
+  margin-right: 4px;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 11px;
+}
+
+/* Ensure last odd card keeps its right rule */
+.principle:last-child:nth-child(odd){ border-right: 1px solid var(--rule); }
+
+/* ---- Mobile ---- */
+@media (max-width: 720px){
+  .principle{
+    grid-column: span 12;
+    border-right: none !important;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    padding: clamp(24px, 5vw, 36px) clamp(20px, 5vw, 32px);
+  }
+  .p-num{ font-size: clamp(32px, 8vw, 44px); }
+  .p-lead{ font-size: clamp(18px, 4.5vw, 22px); }
 }

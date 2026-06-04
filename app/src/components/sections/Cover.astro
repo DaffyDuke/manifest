@@ -1,5 +1,6 @@
 ---
-// Cover — minimal: only the title, the AIDD watermark and two hairlines. No folios, no colophon.
+// Cover — standard splash: a version header, a huge confident title, two entry links.
+// The AIDD mark stays as a faint watermark (parallax hook); two hairlines frame the fold.
 ---
 <section class="cover" data-screen-label="Cover">
   <svg class="cover-watermark" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
@@ -11,13 +12,25 @@
   <div class="cover-rule cover-rule-top" aria-hidden="true"></div>
   <div class="cover-rule cover-rule-bottom" aria-hidden="true"></div>
 
-  <h1 class="cover-title">
-    <span class="line line-1"><span class="word reveal-word" style="--d:.05s">The</span> <span class="word reveal-word" style="--d:.18s">Manifesto</span></span>
-    <span class="line line-2"><span class="word for reveal-word" style="--d:.32s">for</span></span>
-    <span class="line line-3"><span class="word ai reveal-word" style="--d:.45s">
-      <span class="ai-text">AI-Driven</span>
-      <span class="ai-strike" aria-hidden="true"></span>
-    </span></span>
-    <span class="line line-4"><span class="word reveal-word" style="--d:.62s">Development.</span></span>
-  </h1>
+  <div class="cover-stage">
+    <p class="cover-std reveal-word" style="--d:.02s">AIDD <span class="cs-sep">·</span> Manifesto <span class="cs-sep">·</span> v1.0 <span class="cs-sep">·</span> 2026</p>
+
+    <h1 class="cover-title">
+      <span class="line line-1"><span class="word reveal-word" style="--d:.12s">The</span></span>
+      <span class="line line-3"><span class="word ai reveal-word" style="--d:.26s">
+        <span class="ai-text">AI-Driven</span>
+        <span class="ai-strike" aria-hidden="true"></span>
+      </span></span>
+      <span class="line line-4"><span class="word reveal-word" style="--d:.40s">Development</span></span>
+      <span class="line line-2"><span class="word for reveal-word" style="--d:.54s">Manifesto</span></span>
+    </h1>
+
+    <div class="cover-foot reveal-word" style="--d:.72s">
+      <p class="cover-lede">A standard for building software in the age of AI — written by developers, for developers.</p>
+      <nav class="cover-cta" aria-label="Manifesto entry points">
+        <a class="cover-link cover-link-primary" href="#sign">Sign the manifesto</a>
+        <a class="cover-link" href="#values">Read the principles</a>
+      </nav>
+    </div>
+  </div>
 </section>

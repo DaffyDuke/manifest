@@ -1,42 +1,57 @@
-/* ============ FOOTER ============ */
+/* ============ FOOTER — standard document footer ============ */
 .doc-footer{
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 24px;
   padding: clamp(20px, 3vh, 36px) 0 clamp(28px, 4vh, 48px);
   border-top: 1px solid var(--rule);
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 10.5px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
+
 .footer-nav{
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px 22px;
 }
+
 .footer-link{
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   min-height: 44px;
   color: var(--ink-3);
   text-decoration: none;
-  transition: color .2s;
+  transition: color var(--dur-short) var(--ease-out);
 }
-.footer-link svg{ width: 14px; height: 14px; }
-.footer-link:hover{ color: var(--ink); }
+.footer-link svg{
+  width: 14px; height: 14px;
+  flex: none;
+}
+.footer-link:hover{ color: var(--accent); }
+
 .footer-link-text{
-  letter-spacing: 0.18em;
-}
-.footer-text{
   letter-spacing: 0.16em;
+}
+
+.footer-text{
+  font-family: var(--sans);
+  letter-spacing: 0.14em;
   text-transform: lowercase;
   font-size: 11px;
+  color: var(--ink-3);
 }
+
 .footer-year{
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- Mobile ---- */
 @media (max-width: 560px){
   .doc-footer{
     flex-direction: column;
@@ -48,4 +63,5 @@
     flex-direction: column;
     gap: 2px;
   }
+  .footer-link{ min-height: 40px; }
 }

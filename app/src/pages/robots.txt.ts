@@ -6,7 +6,6 @@ export function GET() {
 User-agent: *
 Allow: /
 Disallow: /maintenance
-Disallow: /offline
 
 User-agent: GPTBot
 Allow: /

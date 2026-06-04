@@ -12,7 +12,6 @@ const routeChecks = [
   ['/manifesto.json', 200, 'application/json'],
   ['/schema/home.jsonld', 200, 'application/ld+json'],
   ['/schemamap.xml', 200, 'application/xml'],
-  ['/site.webmanifest', 200, 'application/manifest+json'],
   ['/sw.js', 200, 'javascript'],
   ['/.well-known/security.txt', 200, 'text/plain'],
   ['/.well-known/api-catalog', 200, 'application/linkset+json'],
@@ -68,7 +67,6 @@ test.describe('web checklist surface', () => {
       'href',
       'https://www.ai-driven-development.org/'
     );
-    await expect(page.locator('link[rel="manifest"]')).toHaveAttribute('href', '/site.webmanifest');
     await expect(page.locator('link[rel="icon"][type="image/svg+xml"]')).toHaveCount(1);
     await expect(page.locator('link[rel="alternate icon"]')).toHaveAttribute('href', '/favicon.ico');
     await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
@@ -151,15 +149,9 @@ test.describe('web checklist surface', () => {
     await expect((await request.get('/a1f401c8d1e64cb99fbe0d7f4a462026.txt')).text()).resolves.toBe(
       'a1f401c8d1e64cb99fbe0d7f4a462026\n'
     );
-    await expect((await request.get('/site.webmanifest')).json()).resolves.toMatchObject({
-      display: 'standalone',
-    });
     const gpc = await request.get('/', { headers: { 'Sec-GPC': '1' } });
     expect(gpc.headers()['preference-applied']).toBe('Sec-GPC');
     expect(gpc.headers().vary).toContain('Sec-GPC');
-
-    const manifest = await (await request.get('/site.webmanifest')).json();
-    expect(manifest.icons.some((icon: { purpose: string }) => icon.purpose === 'maskable')).toBe(true);
 
     const missing = await request.get('/does-not-exist');
     expect(missing.status()).toBe(404);

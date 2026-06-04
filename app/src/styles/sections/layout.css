@@ -6,3 +6,56 @@
   position: relative;
   z-index: 2;
 }
+
+/* Document layout — sticky spec index + the document body. */
+.doc-layout{
+  display: grid;
+  grid-template-columns: clamp(180px, 16vw, 224px) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.doc{ min-width: 0; }
+
+/* Sticky table of contents — the "standard" navigation. */
+.spec-index{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  padding-top: clamp(40px, 6vh, 80px);
+}
+.si-head{
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 16px;
+}
+.si-mark{
+  font-family: var(--display); font-weight: 800;
+  font-size: 18px; letter-spacing: -0.03em; color: var(--ink);
+}
+.si-ver{
+  font-family: var(--sans); font-size: 11px;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.si-nav{ display: flex; flex-direction: column; }
+.si-link{
+  display: flex; align-items: baseline; gap: 10px;
+  min-height: 40px; padding: 9px 0 9px 12px; margin-left: -14px;
+  font-family: var(--sans); font-size: 14px;
+  color: var(--ink-3); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.si-link .si-n{
+  font-size: 11px; letter-spacing: .1em; color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.si-link:hover{ color: var(--ink); }
+.si-link.active{ color: var(--ink); border-color: var(--accent); }
+.si-link.active .si-n{ color: var(--accent); }
+
+@media (max-width: 900px){
+  .doc-layout{ grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .spec-index{ display: none; }
+}

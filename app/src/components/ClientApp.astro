@@ -3,17 +3,18 @@
 // EDIT MODE sentinel preserved verbatim (do not rename markers).
 ---
 <script>
-  import { observeReveals, observeTerminals, observeValueArt, attachHeroParallax } from '~/lib/observers';
+  import { observeReveals, observeTerminals, observeValueArt, attachHeroParallax, observeSpecIndex } from '~/lib/observers';
 
   observeReveals();
   observeTerminals();
   observeValueArt();
   attachHeroParallax();
+  observeSpecIndex();
 
   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "accentHue": 28,
-    "paper": "cool",
-    "serifScale": 0.98,
+    "accentHue": 275,
+    "paper": "ice",
+    "serifScale": 1,
     "rainbow": false
   }/*EDITMODE-END*/;
   let state: { accentHue: number; paper: string; serifScale: number; rainbow: boolean } = { ...TWEAK_DEFAULTS };
@@ -23,7 +24,7 @@
       const hueAttr = (el.style as CSSStyleDeclaration).getPropertyValue('--p-hue');
       if (state.rainbow) {
         const h = hueAttr ? parseInt(hueAttr, 10) : state.accentHue;
-        el.style.setProperty('--p-color', `oklch(0.52 0.14 ${h})`);
+        el.style.setProperty('--p-color', `oklch(0.5 0.18 ${h})`);
       } else {
         el.style.removeProperty('--p-color');
       }
@@ -32,29 +33,33 @@
 
   function applyState() {
     const root = document.documentElement.style;
-    root.setProperty('--accent', `oklch(0.52 0.17 ${state.accentHue})`);
-    root.setProperty('--accent-soft', `oklch(0.52 0.17 ${state.accentHue} / 0.12)`);
+    root.setProperty('--accent', `oklch(0.54 0.246 ${state.accentHue})`);
+    root.setProperty('--accent-soft', `oklch(0.54 0.246 ${state.accentHue} / 0.10)`);
+    // Three light papers. Default ("ice") matches tokens.css :root (#eef2ff).
     if (state.paper === 'warm') {
-      root.setProperty('--paper', 'oklch(0.972 0.008 82)');
-      root.setProperty('--paper-2', 'oklch(0.955 0.012 82)');
-      root.setProperty('--ink', 'oklch(0.18 0.012 60)');
-      root.setProperty('--ink-2', 'oklch(0.35 0.012 60)');
-      root.setProperty('--ink-3', 'oklch(0.55 0.010 60)');
-      root.setProperty('--rule', 'oklch(0.82 0.012 70)');
-    } else if (state.paper === 'cool') {
-      root.setProperty('--paper', 'oklch(0.975 0.006 240)');
-      root.setProperty('--paper-2', 'oklch(0.96 0.008 240)');
-      root.setProperty('--ink', 'oklch(0.18 0.012 240)');
-      root.setProperty('--ink-2', 'oklch(0.35 0.012 240)');
-      root.setProperty('--ink-3', 'oklch(0.55 0.010 240)');
-      root.setProperty('--rule', 'oklch(0.82 0.012 240)');
+      root.setProperty('--paper', 'oklch(0.972 0.012 80)');
+      root.setProperty('--paper-2', 'oklch(0.955 0.014 78)');
+      root.setProperty('--paper-3', 'oklch(0.918 0.016 76)');
+      root.setProperty('--ink', 'oklch(0.20 0.04 60)');
+      root.setProperty('--ink-2', 'oklch(0.40 0.03 62)');
+      root.setProperty('--ink-3', 'oklch(0.56 0.025 64)');
+      root.setProperty('--rule', 'oklch(0.86 0.016 70)');
+    } else if (state.paper === 'slate') {
+      root.setProperty('--paper', 'oklch(0.95 0.008 250)');
+      root.setProperty('--paper-2', 'oklch(0.93 0.010 250)');
+      root.setProperty('--paper-3', 'oklch(0.895 0.012 250)');
+      root.setProperty('--ink', 'oklch(0.22 0.05 258)');
+      root.setProperty('--ink-2', 'oklch(0.42 0.04 260)');
+      root.setProperty('--ink-3', 'oklch(0.58 0.03 262)');
+      root.setProperty('--rule', 'oklch(0.85 0.014 256)');
     } else {
-      root.setProperty('--paper', 'oklch(0.16 0.012 60)');
-      root.setProperty('--paper-2', 'oklch(0.19 0.014 60)');
-      root.setProperty('--ink', 'oklch(0.94 0.01 80)');
-      root.setProperty('--ink-2', 'oklch(0.75 0.01 80)');
-      root.setProperty('--ink-3', 'oklch(0.55 0.010 80)');
-      root.setProperty('--rule', 'oklch(0.32 0.012 70)');
+      root.setProperty('--paper', 'oklch(0.962 0.018 275)');
+      root.setProperty('--paper-2', 'oklch(0.945 0.016 274)');
+      root.setProperty('--paper-3', 'oklch(0.910 0.018 272)');
+      root.setProperty('--ink', 'oklch(0.181 0.117 266)');
+      root.setProperty('--ink-2', 'oklch(0.385 0.075 268)');
+      root.setProperty('--ink-3', 'oklch(0.560 0.045 270)');
+      root.setProperty('--rule', 'oklch(0.855 0.025 272)');
     }
     document.documentElement.style.fontSize = (16 * state.serifScale) + 'px';
     document.querySelectorAll<HTMLElement>('#swatches .swatch').forEach((b) => {
@@ -81,10 +86,12 @@
   });
   try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch {}
 
+  // Service worker removed — unregister any previously-installed one (the /sw.js
+  // kill-switch also self-destructs for tabs still controlled by the old worker).
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
-    }, { once: true });
+    navigator.serviceWorker.getRegistrations?.()
+      .then((regs) => regs.forEach((r) => r.unregister()))
+      .catch(() => {});
   }
 
   const modelContext = (navigator as any).modelContext;

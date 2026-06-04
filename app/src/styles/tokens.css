@@ -1,14 +1,46 @@
+/* Hallmark · genre: modern-minimal · macrostructure: Long Document (standard/spec) · register: Vercel B&W
+ * concept: "The Standard" — the manifesto published as a citable reference document.
+ * brand palette as a black&white system: ink = navy #020244, paper = ice #eef2ff, one accent = blue #4E4EF9.
+ * type: Bricolage Grotesque (characterful display) + Inter Tight (body). No mono in UI.
+ * pre-emit critique: P5 H5 E5 S5 R5 V5
+ */
 :root {
-  --paper: oklch(0.972 0.008 82);
-  --paper-2: oklch(0.955 0.012 82);
-  --ink: oklch(0.18 0.012 60);
-  --ink-2: oklch(0.35 0.012 60);
-  --ink-3: oklch(0.55 0.010 60);
-  --rule: oklch(0.82 0.012 70);
-  --accent: oklch(0.52 0.17 28);
-  --accent-soft: oklch(0.52 0.17 28 / 0.12);
-  --serif: "Fraunces", "Times New Roman", serif;
+  /* Ice-white paper + near-black navy ink — the brand's own black & white. */
+  --paper: oklch(0.962 0.018 275);     /* #eef2ff */
+  --paper-2: oklch(0.945 0.016 274);   /* faint panel */
+  --paper-3: oklch(0.910 0.018 272);   /* hover / deeper panel */
+  --ink: oklch(0.181 0.117 266);       /* #020244 — the "black" */
+  --ink-2: oklch(0.385 0.075 268);     /* secondary text */
+  --ink-3: oklch(0.560 0.045 270);     /* muted / labels */
+  --rule: oklch(0.855 0.025 272);      /* hairline on light */
+
+  /* Single functional accent — electric blue (#4E4EF9). Links, active index, the one CTA. */
+  --accent: oklch(0.54 0.246 275);
+  --accent-soft: oklch(0.54 0.246 275 / 0.10);
+  --accent-ink: oklch(0.98 0.012 275); /* text on accent fill */
+  --focus: oklch(0.54 0.246 275);
+
+  /* Reserve brand accents — used sparingly, only where a second signal is needed. */
+  --mint: oklch(0.72 0.13 162);
+  --raspberry: oklch(0.60 0.18 9);
+
+  /* Type — characterful display + clean sans. Mono only inside code illustrations. */
+  --display: "Bricolage Grotesque", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --hand: "Caveat", cursive;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Back-compat aliases: legacy rules reference --serif/--hand. */
+  --serif: var(--display);
+  --hand: var(--display);
+
+  /* Motion — three named easings, never the browser default. */
+  --ease-out: cubic-bezier(0.16, 0.84, 0.24, 1);
+  --ease-in: cubic-bezier(0.6, 0, 0.9, 0.3);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 200ms;
+  --dur-med: 360ms;
+
+  /* Surfaces — crisp, low radius for a document/standard feel. */
+  --radius-card: 8px;
+  --radius-pill: 999px;
+  --radius-input: 6px;
 }
